@@ -1,0 +1,2549 @@
+<html lang="pt-BR">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   Quantum 707 - Robô de Investimento Automatizado
+  </title>
+  <script src="https://res.synthoframe.com/js/reload.js">
+  </script>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+  <script>
+   tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        gold: {
+          light: '#f5d76e',
+          DEFAULT: '#d4af37',
+          dark: '#b8860b'
+        },
+        neon: {
+          gold: '#ffd700',
+          blue: '#00f3ff'
+        },
+        dark: {
+          900: '#0a0a0a',
+          800: '#121212',
+          700: '#1e1e1e'
+        }
+      },
+      fontFamily: {
+        sans: ['Inter', 'sans-serif'],
+        display: ['Orbitron', 'sans-serif']
+      },
+      animation: {
+        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'glow': 'glow 2s ease-in-out infinite alternate'
+      },
+      keyframes: {
+        glow: {
+          '0%': {
+            textShadow: '0 0 5px #fff, 0 0 10px #fff, 0 0 15px #d4af37, 0 0 20px #d4af37'
+          },
+          '100%': {
+            textShadow: '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #ffd700, 0 0 40px #ffd700'
+          }
+        }
+      }
+    }
+  }
+};
+  </script>
+  <style type="text/tailwindcss">
+   @layer utilities {
+            .text-shadow-gold {
+                text-shadow: 0 0 5px #d4af37, 0 0 10px #d4af37;
+            }
+            .text-shadow-neon {
+                text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #00f3ff, 0 0 20px #00f3ff;
+            }
+            .bg-grid {
+                background-image: linear-gradient(rgba(212, 175, 55, 0.1) 1px, transparent 1px),
+                                linear-gradient(90deg, rgba(212, 175, 55, 0.1) 1px, transparent 1px);
+                background-size: 20px 20px;
+            }
+            .border-gradient {
+                border-image: linear-gradient(to right, #d4af37, #ffd700, #d4af37) 1;
+            }
+            .gold-gradient {
+                background: linear-gradient(135deg, #d4af37 0%, #ffd700 50%, #d4af37 100%);
+            }
+        }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Orbitron:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+ </head>
+ <body class="bg-dark-900 text-white font-sans overflow-x-hidden">
+  <!-- [MODULE] a1b_Header -->
+  <header class="fixed w-full top-0 z-50 transition-all duration-300" id="header">
+   <div class="bg-dark-900/80 backdrop-blur-md border-b border-gold/20 px-4">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+     <a class="flex items-center space-x-2" href="javascript:void(0);">
+      <div class="text-gold animate-pulse-slow">
+       <i class="fas fa-robot text-2xl">
+       </i>
+      </div>
+      <span class="text-xl font-display font-bold text-white tracking-wider">
+       <span class="text-gold">
+        Quantum
+       </span>
+       707
+      </span>
+     </a>
+     <!-- Desktop Navigation -->
+     <nav class="hidden md:flex items-center space-x-8">
+      <a class="text-white/80 hover:text-gold transition-colors" href="#como-funciona">
+       Como Funciona
+      </a>
+      <a class="text-white/80 hover:text-gold transition-colors" href="#planos">
+       Planos
+      </a>
+      <a class="text-white/80 hover:text-gold transition-colors" href="#provas-sociais">
+       Provas Sociais
+      </a>
+      <a class="text-white/80 hover:text-gold transition-colors" href="#faq">
+       FAQ
+      </a>
+      <a class="bg-gold text-dark-900 px-5 py-2 rounded-md font-bold hover:bg-gold-light transition-all transform hover:scale-105" href="#quero-testar">
+       Quero Testar
+      </a>
+     </nav>
+     <!-- Mobile menu button -->
+     <button class="md:hidden text-white focus:outline-none" id="mobile-menu-button">
+      <i class="fas fa-bars text-2xl">
+      </i>
+     </button>
+    </div>
+   </div>
+   <!-- Mobile Navigation -->
+   <div class="md:hidden bg-dark-800 border-b border-gold/20 hidden" id="mobile-menu">
+    <div class="container mx-auto px-4 py-3 flex flex-col space-y-4">
+     <a class="text-white/80 hover:text-gold py-2 transition-colors" href="#como-funciona">
+      Como Funciona
+     </a>
+     <a class="text-white/80 hover:text-gold py-2 transition-colors" href="#planos">
+      Planos
+     </a>
+     <a class="text-white/80 hover:text-gold py-2 transition-colors" href="#provas-sociais">
+      Provas Sociais
+     </a>
+     <a class="text-white/80 hover:text-gold py-2 transition-colors" href="#faq">
+      FAQ
+     </a>
+     <a class="bg-gold text-dark-900 px-5 py-3 rounded-md font-bold text-center hover:bg-gold-light transition-all" href="#quero-testar">
+      Quero Testar
+     </a>
+    </div>
+   </div>
+  </header>
+  <!-- [/MODULE] a1b_Header -->
+  <main>
+   <!-- [MODULE] c3d_Hero Section -->
+   <section class="relative min-h-screen flex items-center pt-16 bg-dark-900 overflow-hidden">
+    <div class="absolute inset-0 bg-grid opacity-30">
+    </div>
+    <div class="absolute inset-0 bg-gradient-to-b from-dark-900 via-dark-900/90 to-dark-900">
+    </div>
+    <!-- Animated background elements -->
+    <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-gold/10 rounded-full filter blur-[100px] animate-pulse-slow">
+    </div>
+    <div class="absolute bottom-1/3 right-1/3 w-80 h-80 bg-neon-blue/5 rounded-full filter blur-[120px] animate-pulse-slow" style="animation-delay: 1s;">
+    </div>
+    <div class="container mx-auto px-4 py-20 relative z-10">
+     <div class="flex flex-col lg:flex-row items-center gap-8">
+      <div class="lg:w-1/2 mb-10 lg:mb-0">
+       <div class="inline-block px-4 py-1 rounded-full bg-gold/10 border border-gold/30 text-gold text-sm font-medium mb-6">
+        <i class="fas fa-certificate mr-2 animate-pulse">
+        </i>
+        +500 Investidores Satisfeitos • 4 Anos de Testes
+       </div>
+       <h1 class="text-[clamp(2.5rem,8vw,4.5rem)] font-display font-bold leading-tight mb-6">
+        <span class="block text-white">
+         O Robô de Investimento
+        </span>
+        <span class="text-gold animate-glow">
+         Quantum 707
+        </span>
+        <span class="block text-white/80 text-[clamp(1.5rem,4vw,2.5rem)]">
+         Automação com Inteligência
+        </span>
+       </h1>
+       <p class="text-white/70 text-lg mb-8 max-w-lg">
+        Deixe a emoção de lado e comece a operar com precisão, disciplina e gerenciamento de risco impecável. Resultados comprovados e transparência total.
+       </p>
+       <div class="flex flex-col sm:flex-row gap-4 mb-8">
+        <a class="gold-gradient text-dark-900 px-8 py-4 rounded-md font-bold text-center hover:opacity-90 transition-all transform hover:scale-105 text-lg" href="#quero-testar">
+         <i class="fas fa-rocket mr-2">
+         </i>
+         Quero Testar o Robô Agora
+        </a>
+        <a class="border border-gold/50 text-gold px-8 py-4 rounded-md font-bold text-center hover:bg-gold/10 transition-all text-lg" href="#como-funciona">
+         <i class="fas fa-play-circle mr-2">
+         </i>
+         Como Funciona
+        </a>
+       </div>
+       <div class="flex items-center space-x-4">
+        <div class="flex -space-x-2">
+         <img alt="Investidor" class="w-10 h-10 rounded-full border-2 border-dark-900" src="./api/searchImage?query=profile photo of investor, diverse people, white background, professional photography&amp;width=100&amp;height=100"/>
+         <img alt="Investidor" class="w-10 h-10 rounded-full border-2 border-dark-900" src="./api/searchImage?query=profile photo of investor, diverse people, white background, professional photography&amp;width=100&amp;height=100"/>
+         <img alt="Investidor" class="w-10 h-10 rounded-full border-2 border-dark-900" src="./api/searchImage?query=profile photo of investor, diverse people, white background, professional photography&amp;width=100&amp;height=100"/>
+         <div class="w-10 h-10 rounded-full border-2 border-dark-900 bg-gold/20 flex items-center justify-center text-gold text-xs font-bold">
+          500+
+         </div>
+        </div>
+        <div class="text-white/70 text-sm">
+         <div class="flex items-center text-gold mb-1">
+          <i class="fas fa-star">
+          </i>
+          <i class="fas fa-star">
+          </i>
+          <i class="fas fa-star">
+          </i>
+          <i class="fas fa-star">
+          </i>
+          <i class="fas fa-star-half-alt">
+          </i>
+          <span class="ml-2 text-white/80">
+           4.8/5
+          </span>
+         </div>
+         <span>
+          De mais de 500 investidores
+         </span>
+        </div>
+       </div>
+      </div>
+      <div class="lg:w-1/2 flex justify-center relative">
+       <div class="relative w-full max-w-md">
+        <!-- Mockup MT5 -->
+        <div class="bg-dark-800 rounded-xl overflow-hidden border border-gold/30 shadow-2xl transform rotate-2 hover:rotate-0 transition-transform duration-500">
+         <div class="bg-dark-700 px-4 py-2 border-b border-gold/20 flex items-center">
+          <div class="flex space-x-2 mr-4">
+           <div class="w-3 h-3 rounded-full bg-red-500">
+           </div>
+           <div class="w-3 h-3 rounded-full bg-yellow-500">
+           </div>
+           <div class="w-3 h-3 rounded-full bg-green-500">
+           </div>
+          </div>
+          <div class="text-gold/70 text-sm">
+           MetaTrader 5 - Quantum 707
+          </div>
+         </div>
+         <img alt="Interface MetaTrader 5 com o Quantum 707" class="w-full h-auto" src="./api/searchImage?query=MetaTrader 5 trading platform interface showing charts and trading operations, dark theme, gold accents, professional trading software screenshot&amp;width=800&amp;height=500"/>
+        </div>
+        <!-- Photo of Aurenes -->
+        <div class="absolute -bottom-10 -left-10 bg-dark-800 rounded-lg overflow-hidden border-4 border-dark-900 shadow-lg transform -rotate-6 hover:rotate-0 transition-transform duration-500">
+         <img alt="Aurenes Ferreira - Criador do Quantum 707" class="w-32 h-32 object-cover" src="./api/searchImage?query=professional portrait of Aurenes Ferreira, financial expert, confident expression, dark background with gold lighting, professional headshot&amp;width=200&amp;height=200"/>
+         <div class="absolute inset-0 bg-gradient-to-t from-dark-900 to-transparent flex items-end">
+          <div class="p-2 text-xs">
+           <div class="text-gold font-bold">
+            Aurenes Ferreira
+           </div>
+           <div class="text-white/70">
+            Criador do Quantum 707
+           </div>
+          </div>
+         </div>
+        </div>
+        <!-- Floating badges -->
+        <div class="absolute -top-5 -right-5 bg-dark-800 rounded-lg p-3 border border-gold/30 shadow-lg transform rotate-3 hover:rotate-0 transition-transform duration-500">
+         <div class="text-center">
+          <div class="text-gold text-2xl font-bold">
+           92%
+          </div>
+          <div class="text-white/70 text-xs">
+           Taxa de Acerto
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+    <!-- Scroll indicator -->
+    <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-center text-white/50 animate-bounce">
+     <div class="text-sm mb-2">
+      Descubra Mais
+     </div>
+     <i class="fas fa-chevron-down">
+     </i>
+    </div>
+   </section>
+   <!-- [/MODULE] c3d_Hero Section -->
+   <!-- [MODULE] e5f_Mini Prova Social -->
+   <section class="py-16 bg-dark-800">
+    <div class="container mx-auto px-4">
+     <div class="bg-dark-700 rounded-2xl overflow-hidden border border-gold/20 shadow-xl">
+      <div class="flex flex-col md:flex-row">
+       <div class="md:w-1/2 p-6 md:p-10 flex items-center">
+        <div>
+         <div class="inline-block px-3 py-1 rounded-full bg-gold/10 text-gold text-xs font-medium mb-4">
+          <i class="fas fa-shield-alt mr-1">
+          </i>
+          Transparência Total
+         </div>
+         <h3 class="text-2xl md:text-3xl font-display font-bold mb-4 text-white">
+          Resultados Reais,
+          <span class="text-gold">
+           Não é Fake
+          </span>
+         </h3>
+         <p class="text-white/70 mb-6">
+          "Depois de meses tentando operar manualmente e perdendo dinheiro, decidi testar o Quantum 707. Hoje, sou consistente e posso confiar no sistema para operar enquanto trabalho."
+         </p>
+         <div class="flex items-center">
+          <img alt="Investidor Satisfeito" class="w-12 h-12 rounded-full object-cover mr-4" src="./api/searchImage?query=profile photo of satisfied investor, middle-aged man, smiling, professional headshot&amp;width=100&amp;height=100"/>
+          <div>
+           <div class="text-white font-medium">
+            Marcos Silva
+           </div>
+           <div class="text-white/50 text-sm">
+            Investidor há 1 ano
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+       <div class="md:w-1/2 bg-dark-900 p-4 md:p-6">
+        <div class="grid grid-cols-2 gap-4 h-full">
+         <div class="bg-dark-800 rounded-lg overflow-hidden border border-gold/10 hover:border-gold/30 transition-colors">
+          <img alt="Resultado de Operações" class="w-full h-40 object-cover" src="./api/searchImage?query=MetaTrader 5 trading results showing profit, chart with upward trend, gold and white colors, professional trading screenshot&amp;width=400&amp;height=300"/>
+          <div class="p-3">
+           <div class="text-gold font-bold text-sm mb-1">
+            +R$ 12.480
+           </div>
+           <div class="text-white/70 text-xs">
+            Lucro no mês de Junho
+           </div>
+          </div>
+         </div>
+         <div class="bg-dark-800 rounded-lg overflow-hidden border border-gold/10 hover:border-gold/30 transition-colors">
+          <img alt="Resultado de Operações" class="w-full h-40 object-cover" src="./api/searchImage?query=MetaTrader 5 trading results showing profit, chart with upward trend, gold and white colors, professional trading screenshot&amp;width=400&amp;height=300"/>
+          <div class="p-3">
+           <div class="text-gold font-bold text-sm mb-1">
+            +R$ 8.750
+           </div>
+           <div class="text-white/70 text-xs">
+            Lucro no mês de Maio
+           </div>
+          </div>
+         </div>
+         <div class="bg-dark-800 rounded-lg overflow-hidden border border-gold/10 hover:border-gold/30 transition-colors">
+          <img alt="Resultado de Operações" class="w-full h-40 object-cover" src="./api/searchImage?query=MetaTrader 5 trading results showing profit, chart with upward trend, gold and white colors, professional trading screenshot&amp;width=400&amp;height=300"/>
+          <div class="p-3">
+           <div class="text-gold font-bold text-sm mb-1">
+            +R$ 15.230
+           </div>
+           <div class="text-white/70 text-xs">
+            Lucro no mês de Abril
+           </div>
+          </div>
+         </div>
+         <div class="bg-dark-800 rounded-lg overflow-hidden border border-gold/10 hover:border-gold/30 transition-colors">
+          <div class="p-4 flex flex-col items-center justify-center h-full text-center">
+           <div class="text-gold text-4xl mb-2">
+            <i class="fas fa-chart-line">
+            </i>
+           </div>
+           <div class="text-white font-medium mb-1">
+            Veja Mais Resultados
+           </div>
+           <div class="text-gold text-xs">
+            Acesse a Área de Provas Sociais
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section>
+   <!-- [/MODULE] e5f_Mini Prova Social -->
+   <!-- [MODULE] g7h_A Dor do Público -->
+   <section class="py-20 bg-dark-900 relative overflow-hidden">
+    <div class="absolute inset-0 bg-grid opacity-20">
+    </div>
+    <div class="container mx-auto px-4 relative z-10">
+     <div class="text-center max-w-3xl mx-auto mb-16">
+      <div class="inline-block px-4 py-1 rounded-full bg-gold/10 border border-gold/30 text-gold text-sm font-medium mb-6">
+       <i class="fas fa-exclamation-triangle mr-2">
+       </i>
+       A Realidade dos Investidores
+      </div>
+      <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-display font-bold mb-6">
+       Por Que A
+       <span class="text-gold">
+        Maioria Perde Dinheiro
+       </span>
+       nos Mercados?
+      </h2>
+      <p class="text-white/70 text-lg">
+       As emoções e a falta de sistema são as principais causas de perdas. Descubra como o Quantum 707 resolve esses problemas de forma eficaz.
+      </p>
+     </div>
+     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <!-- Problem 1 -->
+      <div class="bg-dark-800 rounded-xl p-6 border border-gold/10 hover:border-gold/30 transition-all transform hover:-translate-y-1">
+       <div class="w-14 h-14 rounded-full bg-gold/10 flex items-center justify-center mb-6">
+        <i class="fas fa-heart text-gold text-2xl">
+        </i>
+       </div>
+       <h3 class="text-xl font-bold mb-3 text-white">
+        Emoção no Comando
+       </h3>
+       <p class="text-white/70">
+        Medo e ganância tomam conta, levando a decisões impulsivas e irracionais que destruem o patrimônio.
+       </p>
+      </div>
+      <!-- Problem 2 -->
+      <div class="bg-dark-800 rounded-xl p-6 border border-gold/10 hover:border-gold/30 transition-all transform hover:-translate-y-1">
+       <div class="w-14 h-14 rounded-full bg-gold/10 flex items-center justify-center mb-6">
+        <i class="fas fa-clock text-gold text-2xl">
+        </i>
+       </div>
+       <h3 class="text-xl font-bold mb-3 text-white">
+        Falta de Tempo
+       </h3>
+       <p class="text-white/70">
+        Não tem horas para analisar os gráficos, acompanhar notícias e executar operações no horário certo.
+       </p>
+      </div>
+      <!-- Problem 3 -->
+      <div class="bg-dark-800 rounded-xl p-6 border border-gold/10 hover:border-gold/30 transition-all transform hover:-translate-y-1">
+       <div class="w-14 h-14 rounded-full bg-gold/10 flex items-center justify-center mb-6">
+        <i class="fas fa-brain text-gold text-2xl">
+        </i>
+       </div>
+       <h3 class="text-xl font-bold mb-3 text-white">
+        Ansiedade Constante
+       </h3>
+       <p class="text-white/70">
+        Ficar olhando o gráfico o dia todo, se preocupando com perdas e não conseguindo descansar.
+       </p>
+      </div>
+      <!-- Problem 4 -->
+      <div class="bg-dark-800 rounded-xl p-6 border border-gold/10 hover:border-gold/30 transition-all transform hover:-translate-y-1">
+       <div class="w-14 h-14 rounded-full bg-gold/10 flex items-center justify-center mb-6">
+        <i class="fas fa-random text-gold text-2xl">
+        </i>
+       </div>
+       <h3 class="text-xl font-bold mb-3 text-white">
+        Sem Estratégia
+       </h3>
+       <p class="text-white/70">
+        Operar sem um sistema comprovado, baseando-se em dicas de amigos ou notícias sem fundamento.
+       </p>
+      </div>
+     </div>
+     <div class="mt-16 text-center">
+      <a class="inline-block gold-gradient text-dark-900 px-8 py-4 rounded-md font-bold hover:opacity-90 transition-all transform hover:scale-105" href="#a-solucao">
+       <i class="fas fa-lightbulb mr-2">
+       </i>
+       Conheça a Solução
+      </a>
+     </div>
+    </div>
+   </section>
+   <!-- [/MODULE] g7h_A Dor do Público -->
+   <!-- [MODULE] i9j_A Solução – Quantum 707 -->
+   <section class="py-20 bg-dark-800 relative" id="a-solucao">
+    <div class="container mx-auto px-4">
+     <div class="flex flex-col lg:flex-row items-center gap-12">
+      <div class="lg:w-1/2">
+       <div class="relative">
+        <div class="relative z-10 bg-dark-900 rounded-2xl overflow-hidden border border-gold/30 shadow-2xl transform rotate-1 hover:rotate-0 transition-transform duration-500">
+         <img alt="Interface do Quantum 707" class="w-full h-auto" src="./api/searchImage?query=Advanced trading robot interface showing automated trading process, Quantum 707, dark theme with gold accents, futuristic design, professional trading software screenshot&amp;width=800&amp;height=500"/>
+         <div class="absolute inset-0 bg-gradient-to-t from-dark-900 via-dark-900/50 to-transparent flex items-end">
+          <div class="p-6">
+           <div class="text-gold text-sm font-medium mb-2">
+            A Solução para Seus Problemas
+           </div>
+           <h3 class="text-2xl font-display font-bold text-white mb-2">
+            O Quantum 707
+           </h3>
+           <p class="text-white/70 max-w-md">
+            Uma estratégia autoral, desenvolvida após 4 anos de testes e aperfeiçoamentos, com foco em risco controlado e consistência.
+           </p>
+          </div>
+         </div>
+        </div>
+        <!-- Floating elements -->
+        <div class="absolute -bottom-6 -right-6 bg-dark-900 rounded-xl p-4 border border-gold/30 shadow-lg z-20 transform -rotate-3 hover:rotate-0 transition-transform duration-500">
+         <div class="flex items-center space-x-3">
+          <div class="w-12 h-12 rounded-full bg-gold/20 flex items-center justify-center text-gold">
+           <i class="fas fa-chart-pie text-xl">
+           </i>
+          </div>
+          <div>
+           <div class="text-white font-bold">
+            86%
+           </div>
+           <div class="text-white/70 text-xs">
+            Taxa de Vitória
+           </div>
+          </div>
+         </div>
+        </div>
+        <div class="absolute -top-6 -left-6 bg-dark-900 rounded-xl p-4 border border-gold/30 shadow-lg z-20 transform rotate-3 hover:rotate-0 transition-transform duration-500">
+         <div class="flex items-center space-x-3">
+          <div class="w-12 h-12 rounded-full bg-gold/20 flex items-center justify-center text-gold">
+           <i class="fas fa-clock text-xl">
+           </i>
+          </div>
+          <div>
+           <div class="text-white font-bold">
+            24/7
+           </div>
+           <div class="text-white/70 text-xs">
+            Operações Automáticas
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="lg:w-1/2">
+       <div class="inline-block px-4 py-1 rounded-full bg-gold/10 border border-gold/30 text-gold text-sm font-medium mb-6">
+        <i class="fas fa-check-circle mr-2">
+        </i>
+        A Solução para Seus Investimentos
+       </div>
+       <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-display font-bold mb-8">
+        O
+        <span class="text-gold">
+         Quantum 707
+        </span>
+        Resolve Todos Esses Problemas
+       </h2>
+       <div class="space-y-6">
+        <!-- Benefit 1 -->
+        <div class="flex gap-4">
+         <div class="flex-shrink-0 w-12 h-12 rounded-full bg-gold/10 flex items-center justify-center text-gold">
+          <i class="fas fa-bullseye">
+          </i>
+         </div>
+         <div>
+          <h3 class="text-xl font-bold text-white mb-2">
+           Precisão Milimétrica
+          </h3>
+          <p class="text-white/70">
+           Análise contínua do mercado com critérios matemáticos rigorosos para identificar as melhores oportunidades.
+          </p>
+         </div>
+        </div>
+        <!-- Benefit 2 -->
+        <div class="flex gap-4">
+         <div class="flex-shrink-0 w-12 h-12 rounded-full bg-gold/10 flex items-center justify-center text-gold">
+          <i class="fas fa-robot">
+          </i>
+         </div>
+         <div>
+          <h3 class="text-xl font-bold text-white mb-2">
+           Disciplina Impecável
+          </h3>
+          <p class="text-white/70">
+           Sem emoções, sem hesitações. O robô segue a estratégia rigorosamente, sem desviar-se dos parâmetros definidos.
+          </p>
+         </div>
+        </div>
+        <!-- Benefit 3 -->
+        <div class="flex gap-4">
+         <div class="flex-shrink-0 w-12 h-12 rounded-full bg-gold/10 flex items-center justify-center text-gold">
+          <i class="fas fa-shield-alt">
+          </i>
+         </div>
+         <div>
+          <h3 class="text-xl font-bold text-white mb-2">
+           Gerenciamento de Risco Avançado
+          </h3>
+          <p class="text-white/70">
+           Stops loss e take profits automáticos, com proteção contra volatilidade excessiva e drawdown controlado.
+          </p>
+         </div>
+        </div>
+        <!-- Benefit 4 -->
+        <div class="flex gap-4">
+         <div class="flex-shrink-0 w-12 h-12 rounded-full bg-gold/10 flex items-center justify-center text-gold">
+          <i class="fas fa-cogs">
+          </i>
+         </div>
+         <div>
+          <h3 class="text-xl font-bold text-white mb-2">
+           Operações Completamente Automáticas
+          </h3>
+          <p class="text-white/70">
+           Deixa o robô trabalhar para você, 24 horas por dia, 5 dias por semana, sem esforço manual.
+          </p>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section>
+   <!-- [/MODULE] i9j_A Solução – Quantum 707 -->
+   <!-- [MODULE] k0l_“É Seguro?” Objeção -->
+   <section class="py-20 bg-dark-900 relative overflow-hidden">
+    <div class="absolute inset-0 bg-grid opacity-20">
+    </div>
+    <div class="absolute top-1/3 right-0 w-96 h-96 bg-gold/5 rounded-full filter blur-[120px]">
+    </div>
+    <div class="container mx-auto px-4 relative z-10">
+     <div class="max-w-3xl mx-auto text-center mb-16">
+      <div class="inline-block px-4 py-1 rounded-full bg-gold/10 border border-gold/30 text-gold text-sm font-medium mb-6">
+       <i class="fas fa-lock mr-2">
+       </i>
+       Segurança e Transparência
+      </div>
+      <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-display font-bold mb-6">
+       <span class="text-gold">
+        É Seguro?
+       </span>
+       A Principal Objeção
+      </h2>
+      <p class="text-white/70 text-lg">
+       Entendemos sua preocupação com a segurança do seu dinheiro. Vamos explicar como o Quantum 707 funciona e por que é seguro.
+      </p>
+     </div>
+     <div class="bg-dark-800 rounded-2xl border border-gold/20 p-8 md:p-12 max-w-4xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+       <div>
+        <div class="space-y-6">
+         <div class="flex items-start gap-4">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center text-gold mt-1">
+           <i class="fas fa-check">
+           </i>
+          </div>
+          <div>
+           <h3 class="text-white font-bold mb-1">
+            O robô não acessa seu dinheiro
+           </h3>
+           <p class="text-white/70 text-sm">
+            Ele apenas envia ordens de compra e venda para sua conta. Você mantém o controle total sobre seus fundos.
+           </p>
+          </div>
+         </div>
+         <div class="flex items-start gap-4">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center text-gold mt-1">
+           <i class="fas fa-check">
+           </i>
+          </div>
+          <div>
+           <h3 class="text-white font-bold mb-1">
+            Riscos existem, mas são controlados
+           </h3>
+           <p class="text-white/70 text-sm">
+            Qualquer investimento tem riscos, mas o Quantum 707 conta com sistema de stop loss automático para limitar perdas.
+           </p>
+          </div>
+         </div>
+         <div class="flex items-start gap-4">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center text-gold mt-1">
+           <i class="fas fa-check">
+           </i>
+          </div>
+          <div>
+           <h3 class="text-white font-bold mb-1">
+            Total transparência
+           </h3>
+           <p class="text-white/70 text-sm">
+            Todas as operações são visíveis em tempo real no seu MetaTrader 5. Você acompanha tudo o que o robô faz.
+           </p>
+          </div>
+         </div>
+         <div class="flex items-start gap-4">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center text-gold mt-1">
+           <i class="fas fa-check">
+           </i>
+          </div>
+          <div>
+           <h3 class="text-white font-bold mb-1">
+            Você decide quando parar
+           </h3>
+           <p class="text-white/70 text-sm">
+            O robô só opera quando você quer. Você pode desativá-lo a qualquer momento com um clique no MetaTrader 5.
+           </p>
+          </div>
+         </div>
+        </div>
+       </div>
+       <div class="bg-dark-900 rounded-xl p-6 border border-gold/20">
+        <div class="text-center mb-6">
+         <div class="text-gold text-4xl mb-4">
+          <i class="fas fa-shield-alt">
+          </i>
+         </div>
+         <h3 class="text-xl font-bold text-white mb-2">
+          Selo de Transparência
+         </h3>
+         <p class="text-white/70 text-sm mb-6">
+          Nosso robô é auditado regularmente e todos os resultados são公开 e verificáveis.
+         </p>
+         <div class="flex justify-center space-x-4 mb-8">
+          <div class="text-center">
+           <div class="text-gold text-2xl font-bold">
+            4+
+           </div>
+           <div class="text-white/70 text-xs">
+            Anos de Operação
+           </div>
+          </div>
+          <div class="h-10 w-px bg-gold/20">
+          </div>
+          <div class="text-center">
+           <div class="text-gold text-2xl font-bold">
+            500+
+           </div>
+           <div class="text-white/70 text-xs">
+            Investidores Ativos
+           </div>
+          </div>
+          <div class="h-10 w-px bg-gold/20">
+          </div>
+          <div class="text-center">
+           <div class="text-gold text-2xl font-bold">
+            98%
+           </div>
+           <div class="text-white/70 text-xs">
+            Satisfação
+           </div>
+          </div>
+         </div>
+         <a class="block w-full gold-gradient text-dark-900 px-6 py-3 rounded-md font-bold text-center hover:opacity-90 transition-all" href="#quero-testar">
+          <i class="fas fa-rocket mr-2">
+          </i>
+          Quero Testar o Robô Agora
+         </a>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section>
+   <!-- [/MODULE] k0l_“É Seguro?” Objeção -->
+   <!-- [MODULE] m2n_Backtests -->
+   <section class="py-20 bg-dark-800">
+    <div class="container mx-auto px-4">
+     <div class="text-center max-w-3xl mx-auto mb-16">
+      <div class="inline-block px-4 py-1 rounded-full bg-gold/10 border border-gold/30 text-gold text-sm font-medium mb-6">
+       <i class="fas fa-video mr-2">
+       </i>
+       Provas Reais
+      </div>
+      <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-display font-bold mb-6">
+       Backtests e
+       <span class="text-gold">
+        Resultados Reais
+       </span>
+      </h2>
+      <p class="text-white/70 text-lg">
+       Assista aos vídeos reais da estratégia do Quantum 707 em ação, mostrando os backtests e resultados reais de operações.
+      </p>
+     </div>
+     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Video 1 -->
+      <div class="bg-dark-900 rounded-xl overflow-hidden border border-gold/20 group hover:border-gold/40 transition-all">
+       <div class="relative">
+        <img alt="Backtest 2023" class="w-full h-48 object-cover" src="./api/searchImage?query=Video thumbnail of trading robot backtest results, Quantum 707, chart with upward trend, dark theme with gold play button overlay, professional trading screenshot&amp;width=600&amp;height=400"/>
+        <div class="absolute inset-0 bg-dark-900/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+         <div class="w-16 h-16 rounded-full bg-gold flex items-center justify-center text-dark-900 transform scale-90 group-hover:scale-100 transition-transform">
+          <i class="fas fa-play text-xl">
+          </i>
+         </div>
+        </div>
+       </div>
+       <div class="p-6">
+        <h3 class="text-xl font-bold text-white mb-2">
+         Backtest Completo 2023
+        </h3>
+        <p class="text-white/70 text-sm mb-4">
+         Veja os resultados completos do backtest de todo o ano de 2023, mostrando a performance consistente do robô.
+        </p>
+        <div class="flex justify-between items-center">
+         <div class="text-gold font-medium">
+          <i class="fas fa-clock mr-1">
+          </i>
+          18:45
+         </div>
+         <a class="text-gold text-sm hover:text-gold-light transition-colors" href="javascript:void(0);">
+          Assistir
+          <i class="fas fa-arrow-right ml-1">
+          </i>
+         </a>
+        </div>
+       </div>
+      </div>
+      <!-- Video 2 -->
+      <div class="bg-dark-900 rounded-xl overflow-hidden border border-gold/20 group hover:border-gold/40 transition-all">
+       <div class="relative">
+        <img alt="Operações ao Vivo" class="w-full h-48 object-cover" src="./api/searchImage?query=Video thumbnail of live trading operations, Quantum 707, real-time trading, dark theme with gold play button overlay, professional trading screenshot&amp;width=600&amp;height=400"/>
+        <div class="absolute inset-0 bg-dark-900/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+         <div class="w-16 h-16 rounded-full bg-gold flex items-center justify-center text-dark-900 transform scale-90 group-hover:scale-100 transition-transform">
+          <i class="fas fa-play text-xl">
+          </i>
+         </div>
+        </div>
+       </div>
+       <div class="p-6">
+        <h3 class="text-xl font-bold text-white mb-2">
+         Operações ao Vivo
+        </h3>
+        <p class="text-white/70 text-sm mb-4">
+         Assista a uma sessão de operações ao vivo, mostrando como o robô entra e sai das negociações automaticamente.
+        </p>
+        <div class="flex justify-between items-center">
+         <div class="text-gold font-medium">
+          <i class="fas fa-clock mr-1">
+          </i>
+          23:12
+         </div>
+         <a class="text-gold text-sm hover:text-gold-light transition-colors" href="javascript:void(0);">
+          Assistir
+          <i class="fas fa-arrow-right ml-1">
+          </i>
+         </a>
+        </div>
+       </div>
+      </div>
+      <!-- Video 3 -->
+      <div class="bg-dark-900 rounded-xl overflow-hidden border border-gold/20 group hover:border-gold/40 transition-all">
+       <div class="relative">
+        <img alt="Gerenciamento de Risco" class="w-full h-48 object-cover" src="./api/searchImage?query=Video thumbnail of risk management demonstration, Quantum 707, stop loss and take profit, dark theme with gold play button overlay, professional trading screenshot&amp;width=600&amp;height=400"/>
+        <div class="absolute inset-0 bg-dark-900/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+         <div class="w-16 h-16 rounded-full bg-gold flex items-center justify-center text-dark-900 transform scale-90 group-hover:scale-100 transition-transform">
+          <i class="fas fa-play text-xl">
+          </i>
+         </div>
+        </div>
+       </div>
+       <div class="p-6">
+        <h3 class="text-xl font-bold text-white mb-2">
+         Gerenciamento de Risco
+        </h3>
+        <p class="text-white/70 text-sm mb-4">
+         Entenda como o sistema de gerenciamento de risco do Quantum 707 protege seu capital em períodos voláteis.
+        </p>
+        <div class="flex justify-between items-center">
+         <div class="text-gold font-medium">
+          <i class="fas fa-clock mr-1">
+          </i>
+          15:38
+         </div>
+         <a class="text-gold text-sm hover:text-gold-light transition-colors" href="javascript:void(0);">
+          Assistir
+          <i class="fas fa-arrow-right ml-1">
+          </i>
+         </a>
+        </div>
+       </div>
+      </div>
+     </div>
+     <div class="text-center mt-12">
+      <a class="inline-flex items-center text-gold hover:text-gold-light transition-colors font-medium" href="javascript:void(0);">
+       Ver Todos os Vídeos
+       <i class="fas fa-long-arrow-alt-right ml-2">
+       </i>
+      </a>
+     </div>
+    </div>
+   </section>
+   <!-- [/MODULE] m2n_Backtests -->
+   <!-- [MODULE] o4p_Como Funciona -->
+   <section class="py-20 bg-dark-900 relative overflow-hidden" id="como-funciona">
+    <div class="absolute inset-0 bg-grid opacity-20">
+    </div>
+    <div class="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-dark-800 to-transparent">
+    </div>
+    <div class="container mx-auto px-4 relative z-10">
+     <div class="text-center max-w-3xl mx-auto mb-16">
+      <div class="inline-block px-4 py-1 rounded-full bg-gold/10 border border-gold/30 text-gold text-sm font-medium mb-6">
+       <i class="fas fa-cogs mr-2">
+       </i>
+       Funcionamento Automático
+      </div>
+      <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-display font-bold mb-6">
+       Como o
+       <span class="text-gold">
+        Quantum 707
+       </span>
+       Funciona
+      </h2>
+      <p class="text-white/70 text-lg">
+       O processo é simples e totalmente automatizado. Veja as etapas de como o robô opera no mercado.
+      </p>
+     </div>
+     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+      <!-- Step 1 -->
+      <div class="bg-dark-800 rounded-xl p-6 border border-gold/20 relative group hover:border-gold/40 transition-all">
+       <div class="absolute -top-4 -right-4 w-10 h-10 rounded-full bg-gold text-dark-900 font-bold flex items-center justify-center text-xl z-10">
+        1
+       </div>
+       <div class="text-center">
+        <div class="w-16 h-16 rounded-full bg-gold/10 flex items-center justify-center text-gold text-2xl mx-auto mb-6 group-hover:bg-gold/20 transition-colors">
+         <i class="fas fa-search">
+         </i>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-3">
+         Análise Contínua
+        </h3>
+        <p class="text-white/70 text-sm">
+         O robô analisa constantemente o mercado, identificando padrões e oportunidades com base em algoritmos matemáticos.
+        </p>
+       </div>
+      </div>
+      <!-- Step 2 -->
+      <div class="bg-dark-800 rounded-xl p-6 border border-gold/20 relative group hover:border-gold/40 transition-all">
+       <div class="absolute -top-4 -right-4 w-10 h-10 rounded-full bg-gold text-dark-900 font-bold flex items-center justify-center text-xl z-10">
+        2
+       </div>
+       <div class="text-center">
+        <div class="w-16 h-16 rounded-full bg-gold/10 flex items-center justify-center text-gold text-2xl mx-auto mb-6 group-hover:bg-gold/20 transition-colors">
+         <i class="fas fa-sign-in-alt">
+         </i>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-3">
+         Entradas Precisas
+        </h3>
+        <p class="text-white/70 text-sm">
+         Quando as condições são atendidas, o robô entra automaticamente no mercado com ordens de compra ou venda.
+        </p>
+       </div>
+      </div>
+      <!-- Step 3 -->
+      <div class="bg-dark-800 rounded-xl p-6 border border-gold/20 relative group hover:border-gold/40 transition-all">
+       <div class="absolute -top-4 -right-4 w-10 h-10 rounded-full bg-gold text-dark-900 font-bold flex items-center justify-center text-xl z-10">
+        3
+       </div>
+       <div class="text-center">
+        <div class="w-16 h-16 rounded-full bg-gold/10 flex items-center justify-center text-gold text-2xl mx-auto mb-6 group-hover:bg-gold/20 transition-colors">
+         <i class="fas fa-shield-alt">
+         </i>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-3">
+         Stops Automáticos
+        </h3>
+        <p class="text-white/70 text-sm">
+         Define automaticamente stop loss e take profit para cada operação, protegendo seu capital e garantindo lucros.
+        </p>
+       </div>
+      </div>
+      <!-- Step 4 -->
+      <div class="bg-dark-800 rounded-xl p-6 border border-gold/20 relative group hover:border-gold/40 transition-all">
+       <div class="absolute -top-4 -right-4 w-10 h-10 rounded-full bg-gold text-dark-900 font-bold flex items-center justify-center text-xl z-10">
+        4
+       </div>
+       <div class="text-center">
+        <div class="w-16 h-16 rounded-full bg-gold/10 flex items-center justify-center text-gold text-2xl mx-auto mb-6 group-hover:bg-gold/20 transition-colors">
+         <i class="fas fa-balance-scale">
+         </i>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-3">
+         Gerenciamento de Risco
+        </h3>
+        <p class="text-white/70 text-sm">
+         Controla o risco por operação, garantindo que uma única perda não afete significativamente seu capital.
+        </p>
+       </div>
+      </div>
+      <!-- Step 5 -->
+      <div class="bg-dark-800 rounded-xl p-6 border border-gold/20 relative group hover:border-gold/40 transition-all">
+       <div class="absolute -top-4 -right-4 w-10 h-10 rounded-full bg-gold text-dark-900 font-bold flex items-center justify-center text-xl z-10">
+        5
+       </div>
+       <div class="text-center">
+        <div class="w-16 h-16 rounded-full bg-gold/10 flex items-center justify-center text-gold text-2xl mx-auto mb-6 group-hover:bg-gold/20 transition-colors">
+         <i class="fas fa-clock">
+         </i>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-3">
+         24h Sem Emoção
+        </h3>
+        <p class="text-white/70 text-sm">
+         Opera 24 horas por dia, 5 dias por semana, sem emoções, fadiga ou interferência humana.
+        </p>
+       </div>
+      </div>
+     </div>
+     <div class="mt-16 max-w-4xl mx-auto bg-dark-800 rounded-2xl p-8 border border-gold/20">
+      <div class="flex flex-col md:flex-row items-center gap-8">
+       <div class="md:w-1/3">
+        <div class="bg-dark-900 rounded-xl p-4 border border-gold/30 text-center">
+         <div class="text-gold text-4xl mb-4">
+          <i class="fas fa-robot">
+          </i>
+         </div>
+         <h3 class="text-xl font-bold text-white mb-2">
+          Totalmente Automatizado
+         </h3>
+         <p class="text-white/70 text-sm">
+          Não é necessário conhecimento técnico ou experiência em negociações.
+         </p>
+        </div>
+       </div>
+       <div class="md:w-2/3">
+        <h3 class="text-2xl font-bold text-white mb-4">
+         Instalação Simples no MetaTrader 5
+        </h3>
+        <p class="text-white/70 mb-6">
+         O Quantum 707 é um Expert Advisor (EA) para o MetaTrader 5, a plataforma mais popular do mundo para negociações. A instalação é feita em apenas 5 minutos, e você recebe um tutorial passo a passo para configurar tudo corretamente.
+        </p>
+        <a class="inline-flex items-center text-gold hover:text-gold-light transition-colors font-medium" href="#como-comecar">
+         Saiba como começar
+         <i class="fas fa-arrow-right ml-2">
+         </i>
+        </a>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section>
+   <!-- [/MODULE] o4p_Como Funciona -->
+   <!-- [MODULE] q6r_Para Quem Serve -->
+   <section class="py-20 bg-dark-800">
+    <div class="container mx-auto px-4">
+     <div class="text-center max-w-3xl mx-auto mb-16">
+      <div class="inline-block px-4 py-1 rounded-full bg-gold/10 border border-gold/30 text-gold text-sm font-medium mb-6">
+       <i class="fas fa-users mr-2">
+       </i>
+       Público-Alvo
+      </div>
+      <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-display font-bold mb-6">
+       Para
+       <span class="text-gold">
+        Quem Serve
+       </span>
+       o Quantum 707
+      </h2>
+      <p class="text-white/70 text-lg">
+       O robô é perfeito para diferentes perfis de investidores. Descubra se ele é para você.
+      </p>
+     </div>
+     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <!-- Profile 1 -->
+      <div class="bg-dark-900 rounded-xl p-6 border border-gold/20 hover:border-gold/40 transition-all group">
+       <div class="w-16 h-16 rounded-full bg-gold/10 flex items-center justify-center text-gold text-2xl mb-6 group-hover:bg-gold/20 transition-colors">
+        <i class="fas fa-graduation-cap">
+        </i>
+       </div>
+       <h3 class="text-xl font-bold text-white mb-3">
+        Iniciantes
+       </h3>
+       <p class="text-white/70 mb-6">
+        Se você é novo no mundo dos investimentos e não sabe por onde começar, o Quantum 707 é a solução perfeita.
+       </p>
+       <ul class="space-y-3 text-white/70 text-sm">
+        <li class="flex items-center">
+         <i class="fas fa-check text-gold mr-2">
+         </i>
+         Sem conhecimento prévio necessário
+        </li>
+        <li class="flex items-center">
+         <i class="fas fa-check text-gold mr-2">
+         </i>
+         Aprenda enquanto o robô opera
+        </li>
+        <li class="flex items-center">
+         <i class="fas fa-check text-gold mr-2">
+         </i>
+         Tutorial passo a passo
+        </li>
+       </ul>
+      </div>
+      <!-- Profile 2 -->
+      <div class="bg-dark-900 rounded-xl p-6 border border-gold/20 hover:border-gold/40 transition-all group">
+       <div class="w-16 h-16 rounded-full bg-gold/10 flex items-center justify-center text-gold text-2xl mb-6 group-hover:bg-gold/20 transition-colors">
+        <i class="fas fa-briefcase">
+        </i>
+       </div>
+       <h3 class="text-xl font-bold text-white mb-3">
+        Ocupados
+       </h3>
+       <p class="text-white/70 mb-6">
+        Se você tem uma rotina cheia e não tem tempo para ficar olhando gráficos o dia todo, o robô trabalha para você.
+       </p>
+       <ul class="space-y-3 text-white/70 text-sm">
+        <li class="flex items-center">
+         <i class="fas fa-check text-gold mr-2">
+         </i>
+         Operações 100% automáticas
+        </li>
+        <li class="flex items-center">
+         <i class="fas fa-check text-gold mr-2">
+         </i>
+         Sem necessidade de monitoramento
+        </li>
+        <li class="flex items-center">
+         <i class="fas fa-check text-gold mr-2">
+         </i>
+         Trabalha enquanto você vive sua vida
+        </li>
+       </ul>
+      </div>
+      <!-- Profile 3 -->
+      <div class="bg-dark-900 rounded-xl p-6 border border-gold/20 hover:border-gold/40 transition-all group">
+       <div class="w-16 h-16 rounded-full bg-gold/10 flex items-center justify-center text-gold text-2xl mb-6 group-hover:bg-gold/20 transition-colors">
+        <i class="fas fa-brain">
+        </i>
+       </div>
+       <h3 class="text-xl font-bold text-white mb-3">
+        Quem Busca Disciplina
+       </h3>
+       <p class="text-white/70 mb-6">
+        Se você luta contra as emoções no trading e acaba quebrando suas próprias regras, o robô traz disciplina.
+       </p>
+       <ul class="space-y-3 text-white/70 text-sm">
+        <li class="flex items-center">
+         <i class="fas fa-check text-gold mr-2">
+         </i>
+         Sem emoções, apenas lógica
+        </li>
+        <li class="flex items-center">
+         <i class="fas fa-check text-gold mr-2">
+         </i>
+         Segue a estratégia rigorosamente
+        </li>
+        <li class="flex items-center">
+         <i class="fas fa-check text-gold mr-2">
+         </i>
+         Não quebra regras de risco
+        </li>
+       </ul>
+      </div>
+      <!-- Profile 4 -->
+      <div class="bg-dark-900 rounded-xl p-6 border border-gold/20 hover:border-gold/40 transition-all group">
+       <div class="w-16 h-16 rounded-full bg-gold/10 flex items-center justify-center text-gold text-2xl mb-6 group-hover:bg-gold/20 transition-colors">
+        <i class="fas fa-chart-line">
+        </i>
+       </div>
+       <h3 class="text-xl font-bold text-white mb-3">
+        Consistência
+       </h3>
+       <p class="text-white/70 mb-6">
+        Se você busca resultados consistentes ao longo do tempo, sem altos e baixos emocionais, o Quantum 707 é para você.
+       </p>
+       <ul class="space-y-3 text-white/70 text-sm">
+        <li class="flex items-center">
+         <i class="fas fa-check text-gold mr-2">
+         </i>
+         Resultados mensais consistentes
+        </li>
+        <li class="flex items-center">
+         <i class="fas fa-check text-gold mr-2">
+         </i>
+         Baixo drawdown (perda máxima)
+        </li>
+        <li class="flex items-center">
+         <i class="fas fa-check text-gold mr-2">
+         </i>
+         Estratégia comprovada
+        </li>
+       </ul>
+      </div>
+     </div>
+    </div>
+   </section>
+   <!-- [/MODULE] q6r_Para Quem Serve -->
+   <!-- [MODULE] s8t_Diferenciais -->
+   <section class="py-20 bg-dark-900 relative overflow-hidden">
+    <div class="absolute inset-0 bg-grid opacity-20">
+    </div>
+    <div class="absolute top-0 right-0 w-96 h-96 bg-gold/5 rounded-full filter blur-[120px]">
+    </div>
+    <div class="container mx-auto px-4 relative z-10">
+     <div class="text-center max-w-3xl mx-auto mb-16">
+      <div class="inline-block px-4 py-1 rounded-full bg-gold/10 border border-gold/30 text-gold text-sm font-medium mb-6">
+       <i class="fas fa-star mr-2">
+       </i>
+       O Que Nos Diferencia
+      </div>
+      <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-display font-bold mb-6">
+       <span class="text-gold">
+        Diferenciais
+       </span>
+       do Quantum 707
+      </h2>
+      <p class="text-white/70 text-lg">
+       O que torna nosso robô diferente de todos os outros no mercado.
+      </p>
+     </div>
+     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Differencial 1 -->
+      <div class="bg-dark-800 rounded-xl p-6 border border-gold/20 hover:border-gold/40 transition-all group">
+       <div class="w-12 h-12 rounded-full bg-gold/10 flex items-center justify-center text-gold text-xl mb-6 group-hover:bg-gold/20 transition-colors">
+        <i class="fas fa-lightbulb">
+        </i>
+       </div>
+       <h3 class="text-xl font-bold text-white mb-3">
+        Estratégia Autoral
+       </h3>
+       <p class="text-white/70">
+        Desenvolvida por Aurenes Ferreira após 4 anos de pesquisa e testes, não é uma estratégia genérica ou comprada.
+       </p>
+      </div>
+      <!-- Differencial 2 -->
+      <div class="bg-dark-800 rounded-xl p-6 border border-gold/20 hover:border-gold/40 transition-all group">
+       <div class="w-12 h-12 rounded-full bg-gold/10 flex items-center justify-center text-gold text-xl mb-6 group-hover:bg-gold/20 transition-colors">
+        <i class="fas fa-hand-holding-usd">
+        </i>
+       </div>
+       <h3 class="text-xl font-bold text-white mb-3">
+        Não é Afiliado
+       </h3>
+       <p class="text-white/70">
+        Não somos afiliados a nenhuma corretora. Isso significa que nossos interesses estão alinhados aos seus.
+       </p>
+      </div>
+      <!-- Differencial 3 -->
+      <div class="bg-dark-800 rounded-xl p-6 border border-gold/20 hover:border-gold/40 transition-all group">
+       <div class="w-12 h-12 rounded-full bg-gold/10 flex items-center justify-center text-gold text-xl mb-6 group-hover:bg-gold/20 transition-colors">
+        <i class="fas fa-file-audio">
+        </i>
+       </div>
+       <h3 class="text-xl font-bold text-white mb-3">
+        Backtests Auditáveis
+       </h3>
+       <p class="text-white/70">
+        Todos os backtests são feitos com dados reais e podem ser auditados. Não usamos curve fitting ou otimizações excessivas.
+       </p>
+      </div>
+      <!-- Differencial 4 -->
+      <div class="bg-dark-800 rounded-xl p-6 border border-gold/20 hover:border-gold/40 transition-all group">
+       <div class="w-12 h-12 rounded-full bg-gold/10 flex items-center justify-center text-gold text-xl mb-6 group-hover:bg-gold/20 transition-colors">
+        <i class="fas fa-headphones">
+        </i>
+       </div>
+       <h3 class="text-xl font-bold text-white mb-3">
+        Suporte Humano
+       </h3>
+       <p class="text-white/70">
+        Equipe de suporte especializada pronta para ajudar com dúvidas e problemas, não é apenas um robô sem assistência.
+       </p>
+      </div>
+      <!-- Differencial 5 -->
+      <div class="bg-dark-800 rounded-xl p-6 border border-gold/20 hover:border-gold/40 transition-all group">
+       <div class="w-12 h-12 rounded-full bg-gold/10 flex items-center justify-center text-gold text-xl mb-6 group-hover:bg-gold/20 transition-colors">
+        <i class="fas fa-eye">
+        </i>
+       </div>
+       <h3 class="text-xl font-bold text-white mb-3">
+        Transparência Total
+       </h3>
+       <p class="text-white/70">
+        Todos os resultados são公开 e verificáveis. Você pode acompanhar as operações em tempo real no MetaTrader 5.
+       </p>
+      </div>
+      <!-- Differencial 6 -->
+      <div class="bg-dark-800 rounded-xl p-6 border border-gold/20 hover:border-gold/40 transition-all group">
+       <div class="w-12 h-12 rounded-full bg-gold/10 flex items-center justify-center text-gold text-xl mb-6 group-hover:bg-gold/20 transition-colors">
+        <i class="fas fa-sync-alt">
+        </i>
+       </div>
+       <h3 class="text-xl font-bold text-white mb-3">
+        Atualizações Constantes
+       </h3>
+       <p class="text-white/70">
+        A estratégia é atualizada regularmente para se adaptar às mudanças no mercado, garantindo performance contínua.
+       </p>
+      </div>
+     </div>
+    </div>
+   </section>
+   <!-- [/MODULE] s8t_Diferenciais -->
+   <!-- [MODULE] u9v_Provas Sociais Fortes -->
+   <section class="py-20 bg-dark-800" id="provas-sociais">
+    <div class="container mx-auto px-4">
+     <div class="text-center max-w-3xl mx-auto mb-16">
+      <div class="inline-block px-4 py-1 rounded-full bg-gold/10 border border-gold/30 text-gold text-sm font-medium mb-6">
+       <i class="fas fa-comments mr-2">
+       </i>
+       Provas Sociais
+      </div>
+      <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-display font-bold mb-6">
+       <span class="text-gold">
+        Resultados Reais
+       </span>
+       de Investidores
+      </h2>
+      <p class="text-white/70 text-lg">
+       Veja depoimentos, prints de resultados e conversas reais com investidores que já usam o Quantum 707.
+      </p>
+     </div>
+     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <!-- Testimonial 1 -->
+      <div class="lg:col-span-2 bg-dark-900 rounded-xl p-6 border border-gold/20">
+       <div class="flex items-start gap-4 mb-6">
+        <img alt="Investidor Satisfeito" class="w-14 h-14 rounded-full object-cover border-2 border-gold" src="./api/searchImage?query=profile photo of satisfied investor, middle-aged woman, smiling, professional headshot&amp;width=100&amp;height=100"/>
+        <div>
+         <h4 class="text-xl font-bold text-white">
+          Patrícia Almeida
+         </h4>
+         <div class="text-gold flex mb-1">
+          <i class="fas fa-star">
+          </i>
+          <i class="fas fa-star">
+          </i>
+          <i class="fas fa-star">
+          </i>
+          <i class="fas fa-star">
+          </i>
+          <i class="fas fa-star">
+          </i>
+         </div>
+         <div class="text-white/50 text-sm">
+          Investidora há 10 meses
+         </div>
+        </div>
+       </div>
+       <p class="text-white/70 mb-6">
+        "Como médica, eu não tenho tempo para ficar olhando gráficos o dia todo. O Quantum 707 mudou minha vida financeira. Agora posso focar no meu trabalho enquanto o robô opera. Nos últimos 10 meses, tive um retorno médio de 8% ao mês, o que é incrível!"
+       </p>
+       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <img alt="Conversa no WhatsApp" class="rounded-lg border border-gold/20 w-full h-32 object-cover" src="./api/searchImage?query=WhatsApp chat screenshot showing positive feedback about Quantum 707 trading robot, Portuguese language, dark theme with gold accents&amp;width=300&amp;height=200"/>
+        <img alt="Resultado de Operações" class="rounded-lg border border-gold/20 w-full h-32 object-cover" src="./api/searchImage?query=MetaTrader 5 trading results showing profit, chart with upward trend, gold accents, professional trading screenshot&amp;width=300&amp;height=200"/>
+        <img alt="Resultado de Operações" class="rounded-lg border border-gold/20 w-full h-32 object-cover" src="./api/searchImage?query=MetaTrader 5 trading results showing profit, chart with upward trend, gold accents, professional trading screenshot&amp;width=300&amp;height=200"/>
+        <img alt="Extrato Bancário" class="rounded-lg border border-gold/20 w-full h-32 object-cover" src="./api/searchImage?query=Bank transfer receipt showing profit from trading, Brazilian Real currency, dark theme with gold accents&amp;width=300&amp;height=200"/>
+       </div>
+      </div>
+      <!-- Testimonial 2 -->
+      <div class="bg-dark-900 rounded-xl p-6 border border-gold/20">
+       <div class="flex items-start gap-4 mb-6">
+        <img alt="Investidor Satisfeito" class="w-14 h-14 rounded-full object-cover border-2 border-gold" src="./api/searchImage?query=profile photo of satisfied investor, senior man, smiling, professional headshot&amp;width=100&amp;height=100"/>
+        <div>
+         <h4 class="text-xl font-bold text-white">
+          Carlos Mendes
+         </h4>
+         <div class="text-gold flex mb-1">
+          <i class="fas fa-star">
+          </i>
+          <i class="fas fa-star">
+          </i>
+          <i class="fas fa-star">
+          </i>
+          <i class="fas fa-star">
+          </i>
+          <i class="fas fa-star-half-alt">
+          </i>
+         </div>
+         <div class="text-white/50 text-sm">
+          Investidor há 2 anos
+         </div>
+        </div>
+       </div>
+       <p class="text-white/70 mb-6">
+        "Sou aposentado e sempre tive medo de perder meu dinheiro. Depois de testar vários robôs sem sucesso, conheci o Quantum 707. O que mais me impressionou foi a transparência e o gerenciamento de risco. Hoje, tenho uma renda extra mensal que complementa minha aposentadoria."
+       </p>
+       <div class="space-y-4 mb-6">
+        <div class="bg-dark-800 rounded-lg p-4 border border-gold/10">
+         <div class="flex items-center gap-2 text-gold text-sm mb-2">
+          <i class="fab fa-whatsapp">
+          </i>
+          <span>
+           Conversa com o suporte
+          </span>
+         </div>
+         <p class="text-white/70 text-sm italic">
+          "O suporte é excelente! Mesmo sendo iniciante, consegui configurar tudo em menos de uma hora com a ajuda deles."
+         </p>
+        </div>
+        <div class="bg-dark-800 rounded-lg p-4 border border-gold/10">
+         <div class="flex items-center gap-2 text-gold text-sm mb-2">
+          <i class="fas fa-chart-line">
+          </i>
+          <span>
+           Resultado do mês passado
+          </span>
+         </div>
+         <p class="text-white/70 text-sm">
+          "Lucro de R$ 4.850 com um capital inicial de R$ 50.000. Estou muito satisfeito!"
+         </p>
+        </div>
+       </div>
+       <img alt="Resultado de 2 Anos" class="rounded-lg border border-gold/20 w-full h-48 object-cover" src="./api/searchImage?query=MetaTrader 5 trading results showing profit over 2 years, long-term chart with upward trend, gold accents, professional trading screenshot&amp;width=500&amp;height=300"/>
+      </div>
+     </div>
+     <!-- More Testimonials -->
+     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+      <div class="bg-dark-900 rounded-xl p-6 border border-gold/20">
+       <div class="flex items-center gap-4 mb-4">
+        <img alt="Investidor Satisfeito" class="w-10 h-10 rounded-full object-cover border border-gold" src="./api/searchImage?query=profile photo of satisfied investor, young man, smiling, professional headshot&amp;width=100&amp;height=100"/>
+        <div>
+         <h4 class="font-bold text-white">
+          Lucas Souza
+         </h4>
+         <div class="text-gold text-xs flex">
+          <i class="fas fa-star">
+          </i>
+          <i class="fas fa-star">
+          </i>
+          <i class="fas fa-star">
+          </i>
+          <i class="fas fa-star">
+          </i>
+          <i class="fas fa-star">
+          </i>
+         </div>
+        </div>
+       </div>
+       <p class="text-white/70 text-sm">
+        "Já tentei operar manualmente e sempre perdi dinheiro por causa da emoção. O Quantum 707 trouxe a disciplina que eu precisava. Agora minhas operações são executadas com precisão e sem hesitação."
+       </p>
+      </div>
+      <div class="bg-dark-900 rounded-xl p-6 border border-gold/20">
+       <div class="flex items-center gap-4 mb-4">
+        <img alt="Investidor Satisfeito" class="w-10 h-10 rounded-full object-cover border border-gold" src="./api/searchImage?query=profile photo of satisfied investor, young woman, smiling, professional headshot&amp;width=100&amp;height=100"/>
+        <div>
+         <h4 class="font-bold text-white">
+          Mariana Lima
+         </h4>
+         <div class="text-gold text-xs flex">
+          <i class="fas fa-star">
+          </i>
+          <i class="fas fa-star">
+          </i>
+          <i class="fas fa-star">
+          </i>
+          <i class="fas fa-star">
+          </i>
+          <i class="fas fa-star">
+          </i>
+         </div>
+        </div>
+       </div>
+       <p class="text-white/70 text-sm">
+        "Como professora, eu tenho vergonha de dizer que não entendia nada de investimentos. O Quantum 707 me permitiu começar sem conhecimento prévio e agora estou aprendendo enquanto ganho dinheiro."
+       </p>
+      </div>
+     </div>
+     <div class="text-center mt-12">
+      <a class="inline-block gold-gradient text-dark-900 px-8 py-4 rounded-md font-bold hover:opacity-90 transition-all transform hover:scale-105" href="javascript:void(0);">
+       <i class="fas fa-th-large mr-2">
+       </i>
+       Ver Mais Provas Sociais
+      </a>
+     </div>
+    </div>
+   </section>
+   <!-- [/MODULE] u9v_Provas Sociais Fortes -->
+   <!-- [MODULE] w0x_Sobre o Criador -->
+   <section class="py-20 bg-dark-900 relative overflow-hidden">
+    <div class="absolute inset-0 bg-grid opacity-20">
+    </div>
+    <div class="absolute bottom-0 left-0 w-96 h-96 bg-gold/5 rounded-full filter blur-[120px]">
+    </div>
+    <div class="container mx-auto px-4 relative z-10">
+     <div class="flex flex-col lg:flex-row items-center gap-12">
+      <div class="lg:w-1/3">
+       <div class="relative">
+        <div class="relative z-10 rounded-2xl overflow-hidden border-4 border-gold/30 shadow-2xl transform rotate-2 hover:rotate-0 transition-transform duration-500">
+         <img alt="Aurenes Ferreira - Criador do Quantum 707" class="w-full h-auto" src="./api/searchImage?query=Professional portrait of Aurenes Ferreira, financial expert, confident expression, dark background with gold lighting, wearing suit, professional headshot&amp;width=600&amp;height=800"/>
+        </div>
+        <div class="absolute -bottom-6 -right-6 bg-dark-800 rounded-xl p-4 border border-gold/30 shadow-lg z-20">
+         <div class="text-center">
+          <div class="text-gold text-2xl font-bold mb-1">
+           4+
+          </div>
+          <div class="text-white/70 text-xs">
+           Anos de Experiência
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="lg:w-2/3">
+       <div class="inline-block px-4 py-1 rounded-full bg-gold/10 border border-gold/30 text-gold text-sm font-medium mb-6">
+        <i class="fas fa-user-tie mr-2">
+        </i>
+        O Criador
+       </div>
+       <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-display font-bold mb-6">
+        Aurenes Ferreira,
+        <span class="text-gold">
+         Especialista em Negociações
+        </span>
+       </h2>
+       <p class="text-white/70 text-lg mb-6">
+        Com mais de 10 anos de experiência no mercado financeiro, Aurenes Ferreira é um renomado especialista em negociações automatizadas e algoritmos de trading. Formado em Engenharia de Computação e MBA em Finanças, ele combinou sua expertise técnica com seu conhecimento financeiro para desenvolver o Quantum 707.
+       </p>
+       <p class="text-white/70 text-lg mb-8">
+        Após anos de testes e aperfeiçoamentos, Aurenes criou uma estratégia única que alia precisão, disciplina e gerenciamento de risco impecável. O objetivo sempre foi democratizar o acesso a estratégias profissionais, permitindo que qualquer pessoa, independentemente de conhecimento ou tempo, possa investir de forma consistente.
+       </p>
+       <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div class="bg-dark-800 rounded-lg p-4 border border-gold/20 text-center">
+         <div class="text-gold text-2xl font-bold mb-1">
+          10+
+         </div>
+         <div class="text-white/70 text-xs">
+          Anos de Experiência
+         </div>
+        </div>
+        <div class="bg-dark-800 rounded-lg p-4 border border-gold/20 text-center">
+         <div class="text-gold text-2xl font-bold mb-1">
+          500+
+         </div>
+         <div class="text-white/70 text-xs">
+          Investidores Ativos
+         </div>
+        </div>
+        <div class="bg-dark-800 rounded-lg p-4 border border-gold/20 text-center">
+         <div class="text-gold text-2xl font-bold mb-1">
+          4
+         </div>
+         <div class="text-white/70 text-xs">
+          Anos de Testes
+         </div>
+        </div>
+        <div class="bg-dark-800 rounded-lg p-4 border border-gold/20 text-center">
+         <div class="text-gold text-2xl font-bold mb-1">
+          92%
+         </div>
+         <div class="text-white/70 text-xs">
+          Taxa de Acerto
+         </div>
+        </div>
+       </div>
+       <div class="flex space-x-4">
+        <a class="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center text-gold hover:bg-gold/20 transition-colors" href="javascript:void(0);">
+         <i class="fab fa-linkedin">
+         </i>
+        </a>
+        <a class="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center text-gold hover:bg-gold/20 transition-colors" href="javascript:void(0);">
+         <i class="fab fa-youtube">
+         </i>
+        </a>
+        <a class="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center text-gold hover:bg-gold/20 transition-colors" href="javascript:void(0);">
+         <i class="fab fa-instagram">
+         </i>
+        </a>
+       </div>
+      </div>
+     </div>
+     </div>
+   </section>
+   <!-- [/MODULE] w0x_Sobre o Criador -->
+   <!-- [MODULE] y2z_Como Começar -->
+   <section class="py-20 bg-dark-800" id="como-comecar">
+    <div class="container mx-auto px-4">
+     <div class="text-center max-w-3xl mx-auto mb-16">
+      <div class="inline-block px-4 py-1 rounded-full bg-gold/10 border border-gold/30 text-gold text-sm font-medium mb-6">
+       <i class="fas fa-road mr-2">
+       </i>
+       Passo a Passo
+      </div>
+      <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-display font-bold mb-6">
+       Como
+       <span class="text-gold">
+        Começar
+       </span>
+       a Usar o Quantum 707
+      </h2>
+      <p class="text-white/70 text-lg">
+       O processo é simples e rápido. Siga esses passos para começar a operar com o robô.
+      </p>
+     </div>
+     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <!-- Step 1 -->
+      <div class="bg-dark-900 rounded-xl p-6 border border-gold/20 relative group hover:border-gold/40 transition-all">
+       <div class="absolute -top-4 -right-4 w-10 h-10 rounded-full bg-gold text-dark-900 font-bold flex items-center justify-center text-xl z-10">
+        1
+       </div>
+       <div class="text-center">
+        <div class="w-16 h-16 rounded-full bg-gold/10 flex items-center justify-center text-gold text-2xl mx-auto mb-6 group-hover:bg-gold/20 transition-colors">
+         <i class="fas fa-shopping-cart">
+         </i>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-3">
+         Adquirir Licença
+        </h3>
+        <p class="text-white/70 text-sm">
+         Escolha o plano que melhor se adapta ao seu perfil e complete a compra. Você recebe o acesso imediato após o pagamento.
+        </p>
+       </div>
+      </div>
+      <!-- Step 2 -->
+      <div class="bg-dark-900 rounded-xl p-6 border border-gold/20 relative group hover:border-gold/40 transition-all">
+       <div class="absolute -top-4 -right-4 w-10 h-10 rounded-full bg-gold text-dark-900 font-bold flex items-center justify-center text-xl z-10">
+        2
+       </div>
+       <div class="text-center">
+        <div class="w-16 h-16 rounded-full bg-gold/10 flex items-center justify-center text-gold text-2xl mx-auto mb-6 group-hover:bg-gold/20 transition-colors">
+         <i class="fas fa-download">
+         </i>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-3">
+         Acesso Imediato
+        </h3>
+        <p class="text-white/70 text-sm">
+         Baixe o Expert Advisor (EA) do Quantum 707 e o tutorial passo a passo para instalação no MetaTrader 5.
+        </p>
+       </div>
+      </div>
+      <!-- Step 3 -->
+      <div class="bg-dark-900 rounded-xl p-6 border border-gold/20 relative group hover:border-gold/40 transition-all">
+       <div class="absolute -top-4 -right-4 w-10 h-10 rounded-full bg-gold text-dark-900 font-bold flex items-center justify-center text-xl z-10">
+        3
+       </div>
+       <div class="text-center">
+        <div class="w-16 h-16 rounded-full bg-gold/10 flex items-center justify-center text-gold text-2xl mx-auto mb-6 group-hover:bg-gold/20 transition-colors">
+         <i class="fas fa-graduation-cap">
+         </i>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-3">
+         Assistir Tutorial
+        </h3>
+        <p class="text-white/70 text-sm">
+         Siga o tutorial passo a passo para instalar e configurar o robô no seu MetaTrader 5. O processo leva menos de 10 minutos.
+        </p>
+       </div>
+      </div>
+      <!-- Step 4 -->
+      <div class="bg-dark-900 rounded-xl p-6 border border-gold/20 relative group hover:border-gold/40 transition-all">
+       <div class="absolute -top-4 -right-4 w-10 h-10 rounded-full bg-gold text-dark-900 font-bold flex items-center justify-center text-xl z-10">
+        4
+       </div>
+       <div class="text-center">
+        <div class="w-16 h-16 rounded-full bg-gold/10 flex items-center justify-center text-gold text-2xl mx-auto mb-6 group-hover:bg-gold/20 transition-colors">
+         <i class="fas fa-play">
+         </i>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-3">
+         Ativar o Robô
+        </h3>
+        <p class="text-white/70 text-sm">
+         Inicie o Quantum 707 no seu MetaTrader 5 e deixe ele operar automaticamente. Acompanhe os resultados em tempo real.
+        </p>
+       </div>
+      </div>
+     </div>
+     <div class="mt-16 max-w-4xl mx-auto bg-dark-900 rounded-2xl p-8 border border-gold/20">
+      <div class="flex flex-col md:flex-row items-center gap-8">
+       <div class="md:w-1/3">
+        <div class="bg-dark-800 rounded-xl p-6 border border-gold/30 text-center">
+         <div class="text-gold text-4xl mb-4">
+          <i class="fas fa-clock">
+          </i>
+         </div>
+         <h3 class="text-xl font-bold text-white mb-2">
+          Em 15 Minutos
+         </h3>
+         <p class="text-white/70 text-sm">
+          Você pode estar operando com o robô. Não é necessário conhecimento técnico prévio.
+         </p>
+        </div>
+       </div>
+       <div class="md:w-2/3">
+        <h3 class="text-2xl font-bold text-white mb-4">
+         Tutorial Completo e Suporte Especializado
+        </h3>
+        <p class="text-white/70 mb-6">
+         Mesmo que você nunca tenha usado o MetaTrader 5, nosso tutorial passo a passo e suporte especializado garantem que você consiga configurar tudo corretamente em minutos. Além disso, você terá acesso a um grupo exclusivo de investidores onde compartilhamos dicas e atualizações.
+        </p>
+        <div class="flex flex-wrap gap-4">
+         <div class="flex items-center gap-2 text-gold">
+          <i class="fas fa-check-circle">
+          </i>
+          <span class="text-white/80">
+           Tutorial em vídeo
+          </span>
+         </div>
+         <div class="flex items-center gap-2 text-gold">
+          <i class="fas fa-check-circle">
+          </i>
+          <span class="text-white/80">
+           Manual em PDF
+          </span>
+         </div>
+         <div class="flex items-center gap-2 text-gold">
+          <i class="fas fa-check-circle">
+          </i>
+          <span class="text-white/80">
+           Suporte via WhatsApp
+          </span>
+         </div>
+         <div class="flex items-center gap-2 text-gold">
+          <i class="fas fa-check-circle">
+          </i>
+          <span class="text-white/80">
+           Grupo exclusivo
+          </span>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section>
+   <!-- [/MODULE] y2z_Como Começar -->
+   <!-- [MODULE] a4b_Planos e Preços -->
+   <section class="py-20 bg-dark-900 relative overflow-hidden" id="planos">
+    <div class="absolute inset-0 bg-grid opacity-20">
+    </div>
+    <div class="absolute top-1/3 right-0 w-96 h-96 bg-gold/5 rounded-full filter blur-[120px]">
+    </div>
+    <div class="container mx-auto px-4 relative z-10">
+     <div class="text-center max-w-3xl mx-auto mb-16">
+      <div class="inline-block px-4 py-1 rounded-full bg-gold/10 border border-gold/30 text-gold text-sm font-medium mb-6">
+       <i class="fas fa-tag mr-2">
+       </i>
+       Planos e Preços
+      </div>
+      <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-display font-bold mb-6">
+       Escolha o
+       <span class="text-gold">
+        Plano
+       </span>
+       Perfeito para Você
+      </h2>
+      <p class="text-white/70 text-lg">
+       Todos os planos incluem acesso completo ao robô Quantum 707, tutorial, suporte e atualizações.
+      </p>
+     </div>
+     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+      <!-- Basic Plan -->
+      <div class="bg-dark-800 rounded-2xl overflow-hidden border border-gold/20 transition-all hover:border-gold/40 transform hover:-translate-y-2">
+       <div class="p-6 border-b border-gold/10">
+        <h3 class="text-xl font-bold text-white mb-2">
+         Plano Básico
+        </h3>
+        <p class="text-white/70 text-sm mb-4">
+         Ideal para iniciantes que querem testar o robô
+        </p>
+        <div class="flex items-end gap-1 mb-4">
+         <span class="text-4xl font-bold text-white">
+          R$ 297
+         </span>
+         <span class="text-white/50 mb-1">
+          /mês
+         </span>
+        </div>
+        <a class="block w-full bg-dark-700 text-gold border border-gold/30 px-6 py-3 rounded-md font-bold text-center hover:bg-gold/10 transition-all" href="#quero-testar">
+         Escolher Plano
+        </a>
+       </div>
+       <div class="p-6">
+        <ul class="space-y-3">
+         <li class="flex items-start gap-3">
+          <i class="fas fa-check text-gold mt-1">
+          </i>
+          <span class="text-white/70 text-sm">
+           Acesso ao Quantum 707
+          </span>
+         </li>
+         <li class="flex items-start gap-3">
+          <i class="fas fa-check text-gold mt-1">
+          </i>
+          <span class="text-white/70 text-sm">
+           Tutorial de instalação
+          </span>
+         </li>
+         <li class="flex items-start gap-3">
+          <i class="fas fa-check text-gold mt-1">
+          </i>
+          <span class="text-white/70 text-sm">
+           Suporte básico via WhatsApp
+          </span>
+         </li>
+         <li class="flex items-start gap-3">
+          <i class="fas fa-check text-gold mt-1">
+          </i>
+          <span class="text-white/70 text-sm">
+           Atualizações automáticas
+          </span>
+         </li>
+         <li class="flex items-start gap-3 text-white/40">
+          <i class="fas fa-times mt-1">
+          </i>
+          <span class="text-sm">
+           Acesso ao grupo VIP
+          </span>
+         </li>
+         <li class="flex items-start gap-3 text-white/40">
+          <i class="fas fa-times mt-1">
+          </i>
+          <span class="text-sm">
+           Webinar semanal
+          </span>
+         </li>
+        </ul>
+       </div>
+      </div>
+      <!-- Premium Plan -->
+      <div class="bg-dark-800 rounded-2xl overflow-hidden border-2 border-gold relative transform scale-105 z-10">
+       <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gold text-dark-900 text-xs font-bold px-4 py-1 rounded-full">
+        MELHOR OPÇÃO
+       </div>
+       <div class="p-6 border-b border-gold/30">
+        <h3 class="text-xl font-bold text-white mb-2">
+         Plano Premium
+        </h3>
+        <p class="text-white/70 text-sm mb-4">
+         Para investidores que buscam mais suporte e recursos
+        </p>
+        <div class="flex items-end gap-1 mb-4">
+         <span class="text-4xl font-bold text-gold">
+          R$ 497
+         </span>
+         <span class="text-white/50 mb-1">
+          /mês
+         </span>
+        </div>
+        <a class="block w-full gold-gradient text-dark-900 px-6 py-3 rounded-md font-bold text-center hover:opacity-90 transition-all" href="#quero-testar">
+         Escolher Plano
+        </a>
+       </div>
+       <div class="p-6">
+        <ul class="space-y-3">
+         <li class="flex items-start gap-3">
+          <i class="fas fa-check text-gold mt-1">
+          </i>
+          <span class="text-white/70 text-sm">
+           Acesso ao Quantum 707
+          </span>
+         </li>
+         <li class="flex items-start gap-3">
+          <i class="fas fa-check text-gold mt-1">
+          </i>
+          <span class="text-white/70 text-sm">
+           Tutorial completo + mentoria
+          </span>
+         </li>
+         <li class="flex items-start gap-3">
+          <i class="fas fa-check text-gold mt-1">
+          </i>
+          <span class="text-white/70 text-sm">
+           Suporte prioritário 24h
+          </span>
+         </li>
+         <li class="flex items-start gap-3">
+          <i class="fas fa-check text-gold mt-1">
+          </i>
+          <span class="text-white/70 text-sm">
+           Atualizações antecipadas
+          </span>
+         </li>
+         <li class="flex items-start gap-3">
+          <i class="fas fa-check text-gold mt-1">
+          </i>
+          <span class="text-white/70 text-sm">
+           Acesso ao grupo VIP
+          </span>
+         </li>
+         <li class="flex items-start gap-3">
+          <i class="fas fa-check text-gold mt-1">
+          </i>
+          <span class="text-white/70 text-sm">
+           Webinar semanal com Aurenes
+          </span>
+         </li>
+        </ul>
+       </div>
+      </div>
+      <!-- Annual Plan -->
+      <div class="bg-dark-800 rounded-2xl overflow-hidden border border-gold/20 transition-all hover:border-gold/40 transform hover:-translate-y-2">
+       <div class="p-6 border-b border-gold/10">
+        <div class="absolute top-4 right-4 bg-gold text-dark-900 text-xs font-bold px-3 py-1 rounded-full">
+         ECONOMIZE 30%
+        </div>
+        <h3 class="text-xl font-bold text-white mb-2">
+         Plano Anual
+        </h3>
+        <p class="text-white/70 text-sm mb-4">
+         Melhor custo-benefício para investidores sérios
+        </p>
+        <div class="flex items-end gap-1 mb-4">
+         <span class="text-4xl font-bold text-white">
+          R$ 3.479
+         </span>
+         <span class="text-white/50 mb-1">
+          /ano
+         </span>
+        </div>
+        <a class="block w-full bg-dark-700 text-gold border border-gold/30 px-6 py-3 rounded-md font-bold text-center hover:bg-gold/10 transition-all" href="#quero-testar">
+         Escolher Plano
+        </a>
+       </div>
+       <div class="p-6">
+        <ul class="space-y-3">
+         <li class="flex items-start gap-3">
+          <i class="fas fa-check text-gold mt-1">
+          </i>
+          <span class="text-white/70 text-sm">
+           Todos os benefícios do Premium
+          </span>
+         </li>
+         <li class="flex items-start gap-3">
+          <i class="fas fa-check text-gold mt-1">
+          </i>
+          <span class="text-white/70 text-sm">
+           30% de desconto no preço
+          </span>
+         </li>
+         <li class="flex items-start gap-3">
+          <i class="fas fa-check text-gold mt-1">
+          </i>
+          <span class="text-white/70 text-sm">
+           Acesso a novas estratégias
+          </span>
+         </li>
+         <li class="flex items-start gap-3">
+          <i class="fas fa-check text-gold mt-1">
+          </i>
+          <span class="text-white/70 text-sm">
+           Sessão individual com Aurenes
+          </span>
+         </li>
+         <li class="flex items-start gap-3">
+          <i class="fas fa-check text-gold mt-1">
+          </i>
+          <span class="text-white/70 text-sm">
+           Relatórios mensais personalizados
+          </span>
+         </li>
+         <li class="flex items-start gap-3">
+          <i class="fas fa-check text-gold mt-1">
+          </i>
+          <span class="text-white/70 text-sm">
+           Garantia de 30 dias
+          </span>
+         </li>
+        </ul>
+       </div>
+      </div>
+     </div>
+     <div class="mt-16 max-w-3xl mx-auto bg-dark-800 rounded-2xl p-8 border border-gold/20 text-center">
+      <h3 class="text-2xl font-bold text-white mb-4">
+       Todas as formas de pagamento são aceitas
+      </h3>
+      <p class="text-white/70 mb-6">
+       Cartão de crédito, boleto bancário, Pix e transferência bancária.
+      </p>
+      <div class="flex flex-wrap justify-center gap-6">
+       <i class="fab fa-cc-visa text-3xl text-white/70">
+       </i>
+       <i class="fab fa-cc-mastercard text-3xl text-white/70">
+       </i>
+       <i class="fab fa-cc-amex text-3xl text-white/70">
+       </i>
+       <i class="fab fa-cc-paypal text-3xl text-white/70">
+       </i>
+       <i class="fas fa-money-check-alt text-3xl text-white/70">
+       </i>
+       <i class="fas fa-credit-card text-3xl text-white/70">
+       </i>
+      </div>
+     </div>
+    </div>
+   </section>
+   <!-- [/MODULE] a4b_Planos e Preços -->
+   <!-- [MODULE] c6d_Mini FAQ -->
+   <section class="py-20 bg-dark-800">
+    <div class="container mx-auto px-4">
+     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- FAQ Item 1 -->
+      <div class="bg-dark-900 rounded-xl p-6 border border-gold/20 hover:border-gold/40 transition-all">
+       <div class="text-gold text-3xl mb-4">
+        <i class="fas fa-unlock-alt">
+        </i>
+       </div>
+       <h3 class="text-xl font-bold text-white mb-3">
+        O robô acessa meu dinheiro?
+       </h3>
+       <p class="text-white/70">
+        Não. O Quantum 707 é um Expert Advisor para o MetaTrader 5 que apenas envia ordens de compra e venda. Você mantém o controle total sobre sua conta e seus fundos.
+       </p>
+      </div>
+      <!-- FAQ Item 2 -->
+      <div class="bg-dark-900 rounded-xl p-6 border border-gold/20 hover:border-gold/40 transition-all">
+       <div class="text-gold text-3xl mb-4">
+        <i class="fas fa-hand-holding-usd">
+        </i>
+       </div>
+       <h3 class="text-xl font-bold text-white mb-3">
+        O robô pode levar meu dinheiro?
+       </h3>
+       <p class="text-white/70">
+        Não. O robô não tem acesso a sua conta bancária ou carteira digital. Ele apenas opera na sua conta de negociação, enviando ordens de compra e venda de ativos.
+       </p>
+      </div>
+      <!-- FAQ Item 3 -->
+      <div class="bg-dark-900 rounded-xl p-6 border border-gold/20 hover:border-gold/40 transition-all">
+       <div class="text-gold text-3xl mb-4">
+        <i class="fas fa-eye">
+        </i>
+       </div>
+       <h3 class="text-xl font-bold text-white mb-3">
+        Posso ver o que o robô faz?
+       </h3>
+       <p class="text-white/70">
+        Sim. Todas as operações são visíveis em tempo real no seu MetaTrader 5. Você pode acompanhar cada entrada, saída, stop loss e take profit executado pelo robô.
+       </p>
+      </div>
+     </div>
+    </div>
+   </section>
+   <!-- [/MODULE] c6d_Mini FAQ -->
+   <!-- [MODULE] e8f_FAQ Completo -->
+   <section class="py-20 bg-dark-900 relative overflow-hidden" id="faq">
+    <div class="absolute inset-0 bg-grid opacity-20">
+    </div>
+    <div class="container mx-auto px-4 relative z-10">
+     <div class="text-center max-w-3xl mx-auto mb-16">
+      <div class="inline-block px-4 py-1 rounded-full bg-gold/10 border border-gold/30 text-gold text-sm font-medium mb-6">
+       <i class="fas fa-question-circle mr-2">
+       </i>
+       Perguntas Frequentes
+      </div>
+      <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-display font-bold mb-6">
+       <span class="text-gold">
+        FAQ
+       </span>
+       - Dúvidas Comuns
+      </h2>
+      <p class="text-white/70 text-lg">
+       Todas as perguntas que nossos clientes costumam fazer. Se você tiver alguma dúvida que não está aqui, entre em contato conosco.
+      </p>
+     </div>
+     <div class="max-w-3xl mx-auto">
+      <!-- FAQ Accordion -->
+      <div class="space-y-4" id="faq-accordion">
+       <!-- FAQ Item 1 -->
+       <div class="bg-dark-800 rounded-xl border border-gold/20 overflow-hidden">
+        <button class="faq-toggle w-full flex justify-between items-center p-6 text-left focus:outline-none">
+         <h3 class="text-xl font-bold text-white">
+          Qual corretora devo usar com o Quantum 707?
+         </h3>
+         <i class="fas fa-plus text-gold transition-transform">
+         </i>
+        </button>
+        <div class="faq-content hidden px-6 pb-6">
+         <p class="text-white/70">
+          O Quantum 707 funciona com qualquer corretora que ofereça a plataforma MetaTrader 5. Recomendamos corretoras regulamentadas e com boa reputação, como a XP Investimentos, Clear, ModalMais ou Inter. Você pode usar a corretora que já tem conta ou abrir uma nova.
+         </p>
+        </div>
+       </div>
+       <!-- FAQ Item 2 -->
+       <div class="bg-dark-800 rounded-xl border border-gold/20 overflow-hidden">
+        <button class="faq-toggle w-full flex justify-between items-center p-6 text-left focus:outline-none">
+         <h3 class="text-xl font-bold text-white">
+          Posso usar o robô no celular?
+         </h3>
+         <i class="fas fa-plus text-gold transition-transform">
+         </i>
+        </button>
+        <div class="faq-content hidden px-6 pb-6">
+         <p class="text-white/70">
+          O robô é instalado na plataforma MetaTrader 5 para desktop (computador). No entanto, você pode acompanhar as operações e controlar o robô remotamente pelo aplicativo móvel do MetaTrader 5. Para que o robô opere 24 horas, recomendamos deixar o computador ligado ou usar um VPS (servidor virtual).
+         </p>
+        </div>
+       </div>
+       <!-- FAQ Item 3 -->
+       <div class="bg-dark-800 rounded-xl border border-gold/20 overflow-hidden">
+        <button class="faq-toggle w-full flex justify-between items-center p-6 text-left focus:outline-none">
+         <h3 class="text-xl font-bold text-white">
+          É uma mensalidade ou pagamento único?
+         </h3>
+         <i class="fas fa-plus text-gold transition-transform">
+         </i>
+        </button>
+        <div class="faq-content hidden px-6 pb-6">
+         <p class="text-white/70">
+          Oferecemos planos mensais e anuais. O plano básico e o premium são mensais, enquanto o plano anual é um pagamento único que dá acesso por 12 meses, com economia de 30% em relação aos planos mensais. Você pode cancelar a assinatura a qualquer momento.
+         </p>
+        </div>
+       </div>
+       <!-- FAQ Item 4 -->
+       <div class="bg-dark-800 rounded-xl border border-gold/20 overflow-hidden">
+        <button class="faq-toggle w-full flex justify-between items-center p-6 text-left focus:outline-none">
+         <h3 class="text-xl font-bold text-white">
+          Como é o suporte técnico?
+         </h3>
+         <i class="fas fa-plus text-gold transition-transform">
+         </i>
+        </button>
+        <div class="faq-content hidden px-6 pb-6">
+         <p class="text-white/70">
+          O suporte técnico é oferecido via WhatsApp e email. No plano básico, o suporte é básico, enquanto no plano premium e anual você tem suporte prioritário 24 horas. Além disso, os planos superiores oferecem acesso a um grupo VIP e webinars semanais com Aurenes.
+         </p>
+        </div>
+       </div>
+       <!-- FAQ Item 5 -->
+       <div class="bg-dark-800 rounded-xl border border-gold/20 overflow-hidden">
+        <button class="faq-toggle w-full flex justify-between items-center p-6 text-left focus:outline-none">
+         <h3 class="text-xl font-bold text-white">
+          Preciso deixar o computador ligado o tempo todo?
+         </h3>
+         <i class="fas fa-plus text-gold transition-transform">
+         </i>
+        </button>
+        <div class="faq-content hidden px-6 pb-6">
+         <p class="text-white/70">
+          Sim, para que o robô opere 24 horas por dia, é necessário manter o computador ligado com o MetaTrader 5 aberto. Se preferir, pode usar um VPS (servidor virtual), que é um serviço de hospedagem que mantém o MetaTrader 5 rodando 24 horas por dia, sem precisar manter o computador ligado. Recomendamos o serviço de VPS da sua corretora ou provedores especializados.
+         </p>
+        </div>
+       </div>
+       <!-- FAQ Item 6 -->
+       <div class="bg-dark-800 rounded-xl border border-gold/20 overflow-hidden">
+        <button class="faq-toggle w-full flex justify-between items-center p-6 text-left focus:outline-none">
+         <h3 class="text-xl font-bold text-white">
+          O robô funciona em todos os mercados?
+         </h3>
+         <i class="fas fa-plus text-gold transition-transform">
+         </i>
+        </button>
+        <div class="faq-content hidden px-6 pb-6">
+         <p class="text-white/70">
+          O Quantum 707 foi desenvolvido especialmente para operar nos pares de moedas (Forex) e índices. A estratégia é otimizada para esses ativos, que oferecem maior liquidez e volatilidade controlada. Não recomendamos usá-lo em criptomoedas ou ações, pois essas classes de ativos possuem características diferentes.
+         </p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section>
+   <!-- [/MODULE] e8f_FAQ Completo -->
+   <!-- [MODULE] g9h_Garantia e Segurança -->
+   <section class="py-20 bg-dark-800">
+    <div class="container mx-auto px-4">
+     <div class="text-center max-w-3xl mx-auto mb-16">
+      <div class="inline-block px-4 py-1 rounded-full bg-gold/10 border border-gold/30 text-gold text-sm font-medium mb-6">
+       <i class="fas fa-shield-alt mr-2">
+       </i>
+       Segurança e Confiança
+      </div>
+      <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-display font-bold mb-6">
+       <span class="text-gold">
+        Segurança
+       </span>
+       e Garantia
+      </h2>
+      <p class="text-white/70 text-lg">
+       Nossos selos de credibilidade garantem que você está investindo com segurança e transparência.
+      </p>
+     </div>
+     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <!-- Security Badge 1 -->
+      <div class="bg-dark-900 rounded-xl p-6 border border-gold/20 text-center hover:border-gold/40 transition-all">
+       <div class="w-16 h-16 rounded-full bg-gold/10 flex items-center justify-center text-gold text-2xl mx-auto mb-6">
+        <i class="fas fa-lock">
+        </i>
+       </div>
+       <h3 class="text-xl font-bold text-white mb-3">
+        Sem Acesso ao Dinheiro
+       </h3>
+       <p class="text-white/70 text-sm">
+        O robô não acessa sua conta bancária ou carteira digital. Ele apenas opera na sua conta de negociação.
+       </p>
+      </div>
+      <!-- Security Badge 2 -->
+      <div class="bg-dark-900 rounded-xl p-6 border border-gold/20 text-center hover:border-gold/40 transition-all">
+       <div class="w-16 h-16 rounded-full bg-gold/10 flex items-center justify-center text-gold text-2xl mx-auto mb-6">
+        <i class="fas fa-eye">
+        </i>
+       </div>
+       <h3 class="text-xl font-bold text-white mb-3">
+        Total Transparência
+       </h3>
+       <p class="text-white/70 text-sm">
+        Todas as operações são visíveis em tempo real no seu MetaTrader 5. Você acompanha cada movimento do robô.
+       </p>
+      </div>
+      <!-- Security Badge 3 -->
+      <div class="bg-dark-900 rounded-xl p-6 border border-gold/20 text-center hover:border-gold/40 transition-all">
+       <div class="w-16 h-16 rounded-full bg-gold/10 flex items-center justify-center text-gold text-2xl mx-auto mb-6">
+        <i class="fas fa-headphones">
+        </i>
+       </div>
+       <h3 class="text-xl font-bold text-white mb-3">
+        Suporte Humano
+       </h3>
+       <p class="text-white/70 text-sm">
+        Equipe de suporte especializada pronta para ajudar com dúvidas e problemas, não é apenas um robô sem assistência.
+       </p>
+      </div>
+      <!-- Security Badge 4 -->
+      <div class="bg-dark-900 rounded-xl p-6 border border-gold/20 text-center hover:border-gold/40 transition-all">
+       <div class="w-16 h-16 rounded-full bg-gold/10 flex items-center justify-center text-gold text-2xl mx-auto mb-6">
+        <i class="fas fa-file-signature">
+        </i>
+       </div>
+       <h3 class="text-xl font-bold text-white mb-3">
+        Estratégia Autoral
+       </h3>
+       <p class="text-white/70 text-sm">
+        Desenvolvida por Aurenes Ferreira após 4 anos de testes e aperfeiçoamentos, não é uma estratégia genérica.
+       </p>
+      </div>
+     </div>
+     <div class="mt-16 max-w-4xl mx-auto bg-dark-900 rounded-2xl p-8 border border-gold/20">
+      <div class="flex flex-col md:flex-row items-center gap-8">
+       <div class="md:w-1/3">
+        <div class="bg-dark-800 rounded-xl p-6 border border-gold/30 text-center">
+         <div class="text-gold text-4xl mb-4">
+          <i class="fas fa-shield-alt">
+          </i>
+         </div>
+         <h3 class="text-xl font-bold text-white mb-2">
+          Selo de Confiança
+         </h3>
+         <p class="text-white/70 text-sm">
+          Todos os nossos processos são transparentes e auditáveis.
+         </p>
+        </div>
+       </div>
+       <div class="md:w-2/3">
+        <h3 class="text-2xl font-bold text-white mb-4">
+         Garantia de Satisfação
+        </h3>
+        <p class="text-white/70 mb-6">
+         Oferecemos uma garantia de 30 dias para o plano anual. Se você não estiver satisfeito com o desempenho do robô nos primeiros 30 dias, devolvemos o valor integral do seu investimento, sem perguntas.
+        </p>
+        <div class="flex flex-wrap gap-4">
+         <div class="flex items-center gap-2 text-gold">
+          <i class="fas fa-check-circle">
+          </i>
+          <span class="text-white/80">
+           30 dias de garantia
+          </span>
+         </div>
+         <div class="flex items-center gap-2 text-gold">
+          <i class="fas fa-check-circle">
+          </i>
+          <span class="text-white/80">
+           Reembolso integral
+          </span>
+         </div>
+         <div class="flex items-center gap-2 text-gold">
+          <i class="fas fa-check-circle">
+          </i>
+          <span class="text-white/80">
+           Sem burocracia
+          </span>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section>
+   <!-- [/MODULE] g9h_Garantia e Segurança -->
+   <!-- [MODULE] i0j_CTA Final -->
+   <section class="py-20 bg-dark-900 relative overflow-hidden" id="quero-testar">
+    <div class="absolute inset-0 bg-grid opacity-20">
+    </div>
+    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gold/10 rounded-full filter blur-[150px]">
+    </div>
+    <div class="container mx-auto px-4 relative z-10">
+     <div class="max-w-4xl mx-auto bg-dark-800 rounded-3xl p-8 md:p-12 border-2 border-gold/30 shadow-2xl text-center">
+      <div class="text-gold text-5xl mb-6 animate-pulse-slow">
+       <i class="fas fa-rocket">
+       </i>
+      </div>
+      <h2 class="text-[clamp(2rem,6vw,4rem)] font-display font-bold mb-6">
+       <span class="text-white">
+        Quero o
+       </span>
+       <span class="text-gold animate-glow">
+        Quantum 707
+       </span>
+       <span class="text-white">
+        Agora
+       </span>
+      </h2>
+      <p class="text-white/70 text-lg mb-8 max-w-2xl mx-auto">
+       Não perca mais tempo com estratégias ineficientes e emoções que destruem seu patrimônio. Comece hoje mesmo a operar com o robô mais confiável do mercado.
+      </p>
+      <div class="flex flex-col sm:flex-row justify-center gap-4 mb-8">
+       <a class="gold-gradient text-dark-900 px-8 py-4 rounded-md font-bold text-center hover:opacity-90 transition-all transform hover:scale-105 text-lg" href="javascript:void(0);">
+        <i class="fas fa-shopping-cart mr-2">
+        </i>
+        Escolher Meu Plano
+       </a>
+       <a class="bg-transparent border-2 border-gold text-gold px-8 py-4 rounded-md font-bold text-center hover:bg-gold/10 transition-all" href="javascript:void(0);">
+        <i class="fas fa-calendar-alt mr-2">
+        </i>
+        Agendar Demonstração
+       </a>
+      </div>
+      <div class="text-white/50 text-sm">
+       <p>
+        Ganhe acesso imediato após o pagamento • Suporte 24h • Tutorial completo
+       </p>
+      </div>
+     </div>
+    </div>
+   </section>
+   <!-- [/MODULE] i0j_CTA Final -->
+  </main>
+  <!-- [MODULE] k2l_Footer -->
+  <footer class="bg-dark-900 border-t border-gold/20">
+   <div class="container mx-auto px-4 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+     <!-- Company Info -->
+     <div>
+      <a class="flex items-center space-x-2 mb-6" href="javascript:void(0);">
+       <div class="text-gold">
+        <i class="fas fa-robot text-2xl">
+        </i>
+       </div>
+       <span class="text-xl font-display font-bold text-white tracking-wider">
+        <span class="text-gold">
+         Quantum
+        </span>
+        707
+       </span>
+      </a>
+      <p class="text-white/70 mb-6">
+       O robô de investimento mais confiável do mercado, desenvolvido por Aurenes Ferreira após 4 anos de testes e aperfeiçoamentos.
+      </p>
+      <div class="flex space-x-4">
+       <a class="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center text-gold hover:bg-gold/20 transition-colors" href="javascript:void(0);">
+        <i class="fab fa-facebook">
+        </i>
+       </a>
+       <a class="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center text-gold hover:bg-gold/20 transition-colors" href="javascript:void(0);">
+        <i class="fab fa-instagram">
+        </i>
+       </a>
+       <a class="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center text-gold hover:bg-gold/20 transition-colors" href="javascript:void(0);">
+        <i class="fab fa-youtube">
+        </i>
+       </a>
+       <a class="w-10 h-10 rounded-full bg-gold/10 flex items-center justify-center text-gold hover:bg-gold/20 transition-colors" href="javascript:void(0);">
+        <i class="fab fa-linkedin">
+        </i>
+       </a>
+      </div>
+     </div>
+     <!-- Quick Links -->
+     <div>
+      <h4 class="text-white font-bold text-lg mb-6">
+       Links Rápidos
+      </h4>
+      <ul class="space-y-3">
+       <li>
+        <a class="text-white/70 hover:text-gold transition-colors" href="#como-funciona">
+         Como Funciona
+        </a>
+       </li>
+       <li>
+        <a class="text-white/70 hover:text-gold transition-colors" href="#planos">
+         Planos e Preços
+        </a>
+       </li>
+       <li>
+        <a class="text-white/70 hover:text-gold transition-colors" href="#provas-sociais">
+         Provas Sociais
+        </a>
+       </li>
+       <li>
+        <a class="text-white/70 hover:text-gold transition-colors" href="#faq">
+         Perguntas Frequentes
+        </a>
+       </li>
+       <li>
+        <a class="text-white/70 hover:text-gold transition-colors" href="javascript:void(0);">
+         Sobre Nós
+        </a>
+       </li>
+       <li>
+        <a class="text-white/70 hover:text-gold transition-colors" href="javascript:void(0);">
+         Contato
+        </a>
+       </li>
+      </ul>
+     </div>
+     <!-- Contact -->
+     <div>
+      <h4 class="text-white font-bold text-lg mb-6">
+       Contato
+      </h4>
+      <ul class="space-y-3">
+       <li class="flex items-start gap-3">
+        <i class="fas fa-envelope text-gold mt-1">
+        </i>
+        <span class="text-white/70">
+         suporte@quantum707.com.br
+        </span>
+       </li>
+       <li class="flex items-start gap-3">
+        <i class="fas fa-phone text-gold mt-1">
+        </i>
+        <span class="text-white/70">
+         +55 (11) 99999-9999
+        </span>
+       </li>
+       <li class="flex items-start gap-3">
+        <i class="fab fa-whatsapp text-gold mt-1">
+        </i>
+        <span class="text-white/70">
+         +55 (11) 99999-9999
+        </span>
+       </li>
+       <li class="flex items-start gap-3">
+        <i class="fas fa-map-marker-alt text-gold mt-1">
+        </i>
+        <span class="text-white/70">
+         Av. Paulista, 1234 - São Paulo, SP
+        </span>
+       </li>
+      </ul>
+     </div>
+     <!-- Newsletter -->
+     <div>
+      <h4 class="text-white font-bold text-lg mb-6">
+       Newsletter
+      </h4>
+      <p class="text-white/70 mb-4">
+       Inscreva-se para receber dicas de investimentos e atualizações do Quantum 707.
+      </p>
+      <form class="mb-4">
+       <div class="flex">
+        <input class="bg-dark-800 border border-gold/20 text-white px-4 py-2 rounded-l-md w-full focus:outline-none focus:border-gold" placeholder="Seu email" type="email"/>
+        <button class="bg-gold text-dark-900 px-4 py-2 rounded-r-md font-bold hover:bg-gold-light transition-colors" type="submit">
+         <i class="fas fa-paper-plane">
+         </i>
+        </button>
+       </div>
+      </form>
+      <p class="text-white/50 text-sm">
+       Não enviamos spam. Você pode cancelar a inscrição a qualquer momento.
+      </p>
+     </div>
+    </div>
+    <div class="border-t border-gold/10 pt-8 flex flex-col md:flex-row justify-between items-center">
+     <div class="text-white/50 text-sm mb-4 md:mb-0">
+      ©
+2023 Quantum 707. Todos os direitos reservados.
+     </div>
+     <div class="flex space-x-6">
+      <a class="text-white/50 text-sm hover:text-gold transition-colors" href="javascript:void(0);">
+       Política de Privacidade
+      </a>
+      <a class="text-white/50 text-sm hover:text-gold transition-colors" href="javascript:void(0);">
+       Termos de Uso
+      </a>
+      <a class="text-white/50 text-sm hover:text-gold transition-colors" href="javascript:void(0);">
+       Cookie Policy
+      </a>
+     </div>
+    </div>
+   </div>
+  </footer>
+  <!-- [/MODULE] k2l_Footer -->
+  <!-- Back to top button -->
+  <button class="fixed bottom-6 right-6 w-12 h-12 rounded-full bg-gold text-dark-900 flex items-center justify-center text-xl shadow-lg opacity-0 invisible transition-all z-50" id="back-to-top">
+   <i class="fas fa-arrow-up">
+   </i>
+  </button>
+  <!-- JavaScript -->
+  <!-- [JSMOD] m4n_Navigation and Mobile Menu -->
+  <script id="navigation-script">
+   // Mobile menu toggle
+var mobileMenuButton = document.getElementById('mobile-menu-button');
+var mobileMenu = document.getElementById('mobile-menu');
+mobileMenuButton.addEventListener('click', function () {
+  mobileMenu.classList.toggle('hidden');
+  var icon = mobileMenuButton.querySelector('i');
+  if (mobileMenu.classList.contains('hidden')) {
+    icon.classList.remove('fa-times');
+    icon.classList.add('fa-bars');
+  } else {
+    icon.classList.remove('fa-bars');
+    icon.classList.add('fa-times');
+  }
+});
+
+// Close mobile menu when clicking on a link
+var mobileLinks = mobileMenu.querySelectorAll('a');
+mobileLinks.forEach(function (link) {
+  link.addEventListener('click', function () {
+    mobileMenu.classList.add('hidden');
+    var icon = mobileMenuButton.querySelector('i');
+    icon.classList.remove('fa-times');
+    icon.classList.add('fa-bars');
+  });
+});
+
+// Header scroll effect
+var header = document.getElementById('header');
+window.addEventListener('scroll', function () {
+  if (window.scrollY > 50) {
+    header.classList.add('py-2', 'shadow-md');
+    header.classList.remove('py-3');
+  } else {
+    header.classList.add('py-3');
+    header.classList.remove('py-2', 'shadow-md');
+  }
+});
+
+// Back to top button
+var backToTopButton = document.getElementById('back-to-top');
+window.addEventListener('scroll', function () {
+  if (window.scrollY > 300) {
+    backToTopButton.classList.remove('opacity-0', 'invisible');
+    backToTopButton.classList.add('opacity-100', 'visible');
+  } else {
+    backToTopButton.classList.add('opacity-0', 'invisible');
+    backToTopButton.classList.remove('opacity-100', 'visible');
+  }
+});
+backToTopButton.addEventListener('click', function () {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+});
+
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    var targetId = this.getAttribute('href');
+    if (targetId === '#') return;
+    var targetElement = document.querySelector(targetId);
+    if (targetElement) {
+      targetElement.scrollIntoView({
+        behavior: 'smooth'
+      });
+    }
+  });
+});
+  </script>
+  <!-- [/JSMOD] m4n_Navigation and Mobile Menu -->
+  <!-- [JSMOD] o6p_FAQ Accordion -->
+  <script id="faq-script">
+   // FAQ accordion
+var faqToggles = document.querySelectorAll('.faq-toggle');
+faqToggles.forEach(function (toggle) {
+  toggle.addEventListener('click', function () {
+    var content = toggle.nextElementSibling;
+    var icon = toggle.querySelector('i');
+
+    // Close all other FAQs
+    faqToggles.forEach(function (otherToggle) {
+      if (otherToggle !== toggle) {
+        otherToggle.nextElementSibling.classList.add('hidden');
+        otherToggle.querySelector('i').classList.remove('fa-minus', 'rotate-45');
+        otherToggle.querySelector('i').classList.add('fa-plus');
+      }
+    });
+
+    // Toggle current FAQ
+    content.classList.toggle('hidden');
+    if (content.classList.contains('hidden')) {
+      icon.classList.remove('fa-minus', 'rotate-45');
+      icon.classList.add('fa-plus');
+    } else {
+      icon.classList.remove('fa-plus');
+      icon.classList.add('fa-minus', 'rotate-45');
+    }
+  });
+});
+  </script>
+  <!-- [/JSMOD] o6p_FAQ Accordion -->
+ </body>
+</html>
