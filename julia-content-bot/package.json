@@ -1,0 +1,16 @@
+{
+  "name": "julia-content-bot",
+  "version": "1.0.0",
+  "description": "Bot de automação de conteúdo para @eujuliasupa — carrosséis financeiros para brasileiros nos EUA",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "schedule": "node src/scheduler.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.30.0",
+    "axios": "^1.7.0",
+    "dotenv": "^16.4.0",
+    "node-cron": "^3.0.3"
+  }
+}
